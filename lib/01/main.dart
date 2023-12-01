@@ -14,10 +14,8 @@ int sumOfCalibrationValues(String input) {
   for (final line in lines) {
     if (line.isEmpty) continue;
 
-    final numbers = RegExp(r'\d+')
-        .allMatches(line)
-        .map((m) => m.group(0)!)
-        .toList();
+    final numbers =
+        RegExp(r'\d').allMatches(line).map((m) => m.group(0)!).toList();
 
     final value = int.parse('${numbers.first}${numbers.last}');
     sum += value;
