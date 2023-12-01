@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:advent_of_code/utils.dart';
+
 void main() {
   // read contents of file called input.txt in the current directory
   final input = File('lib/01/input.txt').readAsStringSync();
@@ -14,20 +16,23 @@ int sumOfCalibrationValues(String input) {
   for (final line in lines) {
     if (line.isEmpty) continue;
 
-    final numbers = RegExp(r'\d|one|two|three|four|five|six|seven|eight|nine')
-        .allMatches(line)
-        .map((m) => m.group(0)!)
-        .toList();
+    final firstMatch =
+        RegExp(r'(\d|one|two|three|four|five|six|seven|eight|nine)')
+            .firstMatch(line)!
+            .group(0);
 
-    final first =
-        numbers.first.length > 1 ? _wordLookup[numbers.first] : numbers.first;
-    final last =
-        numbers.last.length > 1 ? _wordLookup[numbers.last] : numbers.last;
+    final lastMatch =
+        RegExp(r'(\d|eno|owt|eerht|ruof|evif|xis|neves|thgie|enin)')
+            .firstMatch(line.reversed())!
+            .group(0);
+
+    final first = firstMatch!.length > 1 ? _wordLookup[firstMatch] : firstMatch;
+    final last = lastMatch!.length > 1 ? _reversedLookup[lastMatch] : lastMatch;
 
     final value = int.parse('$first$last');
     sum += value;
 
-    print('$line - $numbers - $first - $last - $value');
+    print('$line - $first - $last - $value');
   }
 
   return sum;
@@ -43,4 +48,16 @@ const _wordLookup = {
   'seven': '7',
   'eight': '8',
   'nine': '9',
+};
+
+const _reversedLookup = {
+  'eno': '1',
+  'owt': '2',
+  'eerht': '3',
+  'ruof': '4',
+  'evif': '5',
+  'xis': '6',
+  'neves': '7',
+  'thgie': '8',
+  'enin': '9',
 };
