@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:advent_of_code/utils.dart';
 
 void main() {
-  final input = File('lib/01/input.txt').readAsStringSync();
+  final input = File('lib/01.txt').readAsStringSync();
   final answer = sumOfCalibrationValues(input);
   print(answer);
 }
