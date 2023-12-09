@@ -47,8 +47,9 @@ int sumOfIdsOfPossibleGames(String input) {
     }
 
     print('   MAX: $red red, $green green, $blue blue');
-    if (red < _red && green < _green && blue < _blue) {
+    if (red <= _red && green <= _green && blue <= _blue) {
       sum += id;
+      print('    POSSIBLE: $sum');
     }
   }
 
