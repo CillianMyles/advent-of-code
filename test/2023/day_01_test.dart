@@ -29,14 +29,14 @@ void main() {
   });
 }
 
-const _sampleInputPart1 = '''
+const _sampleInputPart1 = r'''
 1abc2
 pqr3stu8vwx
 a1b2c3d4e5f
 treb7uchet
 ''';
 
-const _sampleInputPart2 = '''
+const _sampleInputPart2 = r'''
 two1nine
 eightwothree
 abcone2threexyz
