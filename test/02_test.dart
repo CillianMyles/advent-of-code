@@ -20,6 +20,23 @@ void main() {
       );
     });
   });
+
+  group('part 2', () {
+    test('sample', () {
+      expect(
+        part2(_sampleInput),
+        2286,
+      );
+    });
+
+    test('final test', () {
+      final input = File('lib/02.txt').readAsStringSync();
+      expect(
+        part2(input),
+        65122,
+      );
+    });
+  });
 }
 
 const _sampleInput = '''
