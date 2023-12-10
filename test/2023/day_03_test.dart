@@ -16,7 +16,7 @@ void main() {
       final input = File('lib/2023/day_03.txt').readAsStringSync();
       expect(
         part1(input),
-        42,
+        525911,
       );
     });
   });

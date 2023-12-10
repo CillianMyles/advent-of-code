@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:advent_of_code/utils.dart';
+
 void main() {
   final input = File('lib/2023/day_03.txt').readAsStringSync();
   final answer1 = part1(input);
@@ -20,13 +22,16 @@ bool _isSymbol(String char) => !_isDot(char) && !_isNumber(char);
 
 int part1(String input) {
   print(input);
+  print('----------');
 
-  final lines = input.split('\n');
+  final lines = input
+      .split('\n')
+      .where((line) => line.isNotEmpty)
+      .toList(growable: false);
 
   var sum = 0;
   for (int y = 0; y < lines.length; y++) {
     final line = lines[y];
-    if (line.isEmpty) continue;
 
     var value = '';
     int start = 0;
@@ -38,15 +43,55 @@ int part1(String input) {
       end = line.length - 1;
     }
 
-    for (int x = 0; x < line.length; x++) {
-      final char = line[x];
+    void match() {
+      var match = false;
 
-      if (x == 0) reset();
+      final hasRowAbove = y > 0;
+      final hasRowBelow = y < lines.length - 1;
+      final hasColumnLeft = start > 0;
+      final hasColumnRight = end < line.length - 1;
 
-      void match() {
-        print('$value [$y:$start-$end]');
-        reset();
+      if (hasRowAbove) {
+        final lineAbove = lines[y - 1];
+        final lineSubstring = lineAbove.substring(
+          hasColumnLeft ? start - 1 : start,
+          hasColumnRight ? end + 1 : end,
+        );
+        final charsAbove = lineSubstring.split('');
+        if (charsAbove.any(_isSymbol)) match = true;
       }
+
+      if (hasRowBelow) {
+        final lineBelow = lines[y + 1];
+        final lineSubstring = lineBelow.substring(
+          hasColumnLeft ? start - 1 : start,
+          hasColumnRight ? end + 1 : end,
+        );
+        final charsBelow = lineSubstring.split('');
+        if (charsBelow.any(_isSymbol)) match = true;
+      }
+
+      if (hasColumnLeft) {
+        final char = line.substring(start - 1, start);
+        if (_isSymbol(char)) match = true;
+      }
+
+      if (hasColumnRight) {
+        final char = line.substring(end, end + 1);
+        if (_isSymbol(char)) match = true;
+      }
+
+      if (match) {
+        sum += value.toInt();
+      }
+
+      print('$value [$y:$start-$end] $match');
+      reset();
+    }
+
+    for (int x = 0; x < line.length; x++) {
+      if (x == 0) reset();
+      final char = line[x];
 
       if (_isNumber(char)) {
         if (value.isEmpty) start = x;
@@ -66,5 +111,7 @@ int part1(String input) {
 }
 
 int part2(String input) {
+  print(input);
+  print('----------');
   return 0;
 }
