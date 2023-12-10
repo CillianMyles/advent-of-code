@@ -1,12 +1,22 @@
+import 'dart:io';
+
 import 'package:advent_of_code/02.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('sumOfIdsOfPossibleGames', () {
+  group('part 1', () {
     test('sample', () {
       expect(
-        sumOfIdsOfPossibleGames(_sampleInput),
+        part1(_sampleInput),
         8,
+      );
+    });
+
+    test('final test', () {
+      final input = File('lib/02.txt').readAsStringSync();
+      expect(
+        part1(input),
+        2879,
       );
     });
   });

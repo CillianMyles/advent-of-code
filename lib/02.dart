@@ -4,11 +4,12 @@ import 'package:advent_of_code/utils.dart';
 
 void main() {
   final input = File('lib/02.txt').readAsStringSync();
-  final answer = sumOfIdsOfPossibleGames(input);
+  final answer = part1(input);
   print(answer);
 }
 
-int sumOfIdsOfPossibleGames(String input) {
+/// Sum of the ids of all games that are possible.
+int part1(String input) {
   final lines = input.split('\n');
 
   var sum = 0;
