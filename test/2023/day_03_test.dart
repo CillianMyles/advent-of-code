@@ -25,7 +25,7 @@ void main() {
     test('sample', () {
       expect(
         part2(_sampleInput),
-        42,
+        467835,
       );
     });
 
