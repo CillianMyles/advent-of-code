@@ -4,9 +4,16 @@ import 'package:advent_of_code/utils.dart';
 
 void main() {
   final input = File('lib/02.txt').readAsStringSync();
-  final answer = part1(input);
-  print(answer);
+  final answer1 = part1(input);
+  final answer2 = part2(input);
+  print('----------');
+  print('Part 1: $answer1');
+  print('Part 2: $answer2');
 }
+
+const _red = 12;
+const _green = 13;
+const _blue = 14;
 
 /// Sum of the ids of all games that are possible.
 int part1(String input) {
@@ -57,6 +64,6 @@ int part1(String input) {
   return sum;
 }
 
-const _red = 12;
-const _green = 13;
-const _blue = 14;
+int part2(String input) {
+  return 0;
+}
