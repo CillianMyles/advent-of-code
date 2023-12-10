@@ -38,15 +38,15 @@ int part1(String input) {
       end = line.length - 1;
     }
 
-    void match() {
-      print('$value [$y:$start-$end]');
-      reset();
-    }
-
     for (int x = 0; x < line.length; x++) {
       final char = line[x];
 
       if (x == 0) reset();
+
+      void match() {
+        print('$value [$y:$start-$end]');
+        reset();
+      }
 
       if (_isNumber(char)) {
         if (value.isEmpty) start = x;
