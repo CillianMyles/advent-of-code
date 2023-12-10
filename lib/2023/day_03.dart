@@ -39,7 +39,7 @@ int part1(String input) {
     }
 
     void match() {
-      print('$value - start: $start - end: $end');
+      print('$value [$y:$start-$end]');
       reset();
     }
 
@@ -50,11 +50,11 @@ int part1(String input) {
 
       if (_isNumber(char)) {
         if (value.isEmpty) start = x;
+        value += char;
         if (x == line.length - 1) {
           end = x;
           match();
         }
-        value += char;
       } else if (value.isNotEmpty) {
         end = x;
         match();
