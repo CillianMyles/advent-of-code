@@ -6,4 +6,8 @@ extension StringX on String {
   int toInt() {
     return int.parse(this);
   }
+
+  List<String> chars() {
+    return split('');
+  }
 }
