@@ -7,7 +7,7 @@ void main() {
   group('sumOfPairDistances', () {
     test('part 1 sample', () {
       expect(
-        sumOfPairDistances(_sampleInputPart1),
+        sumOfPairDistances(_sampleInput),
         11,
       );
     });
@@ -20,9 +20,26 @@ void main() {
       );
     });
   });
+
+  group('getSimilarityScore', () {
+    test('part 2 sample', () {
+      expect(
+        getSimilarityScore(_sampleInput),
+        31,
+      );
+    });
+
+    test('part 2 test', () {
+      final input = File('lib/day_01.txt').readAsStringSync();
+      expect(
+        getSimilarityScore(input),
+        23117829,
+      );
+    });
+  });
 }
 
-const _sampleInputPart1 = r'''
+const _sampleInput = r'''
 3   4
 4   3
 2   5
