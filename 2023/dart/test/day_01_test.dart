@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:advent_of_code/2023/day_01.dart';
+import 'package:advent_of_code/day_01.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -20,7 +20,7 @@ void main() {
     });
 
     test('final test', () {
-      final input = File('lib/2023/day_01.txt').readAsStringSync();
+      final input = File('lib/day_01.txt').readAsStringSync();
       expect(
         sumOfCalibrationValues(input),
         54581,

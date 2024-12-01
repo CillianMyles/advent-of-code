@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:advent_of_code/2023/day_02.dart';
+import 'package:advent_of_code/day_02.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -13,7 +13,7 @@ void main() {
     });
 
     test('final test', () {
-      final input = File('lib/2023/day_02.txt').readAsStringSync();
+      final input = File('lib/day_02.txt').readAsStringSync();
       expect(
         part1(input),
         2879,
@@ -30,7 +30,7 @@ void main() {
     });
 
     test('final test', () {
-      final input = File('lib/2023/day_02.txt').readAsStringSync();
+      final input = File('lib/day_02.txt').readAsStringSync();
       expect(
         part2(input),
         65122,
