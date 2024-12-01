@@ -48,9 +48,8 @@ int getSimilarityScore(String input) {
     rhs.add(int.parse(split[1]));
   }
 
-  var occurrences = 0;
   for (var l in lhs) {
-    occurrences = 0;
+    var occurrences = 0;
     for (var r in rhs) {
       if (l == r) occurrences++;
     }
