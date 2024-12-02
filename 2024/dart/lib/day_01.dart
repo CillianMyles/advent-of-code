@@ -3,11 +3,11 @@ import 'dart:io';
 void main() {
   final input = File('lib/day_01.txt').readAsStringSync();
 
-  final distances = sumOfPairDistances(input);
-  print('distances: $distances');
+  final distance = sumOfPairDistances(input);
+  print('Distance: $distance');
 
   final similarity = getSimilarityScore(input);
-  print('similarity: $similarity');
+  print('Similarity: $similarity');
 }
 
 int sumOfPairDistances(String input) {
