@@ -1,7 +1,7 @@
 import 'dart:io';
 
 void main() {
-  final input = File('lib/day_01.txt').readAsStringSync();
+  final input = File('lib/day_01_test.txt').readAsStringSync();
 
   final distance = sumOfPairDistances(input);
   print('Distance: $distance');
