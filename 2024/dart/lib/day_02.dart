@@ -10,8 +10,9 @@ void main() {
   print('Mostly Safe Reports: $mostlySafeReports');
 }
 
-enum Order { unknown, ascending, descending }
-
+/// Rules for a safe report:
+/// * The levels are either all increasing or all decreasing.
+/// * Any two adjacent levels differ by at least one and at most three.
 int safeReportsCount(String input) {
   var count = 0;
   final lines = input.split('\n');
@@ -26,6 +27,10 @@ int safeReportsCount(String input) {
   return count;
 }
 
+/// Rules for a mostly safe report:
+/// * The levels are either all increasing or all decreasing.
+/// * Any two adjacent levels differ by at least one and at most three.
+/// * If a report can be made safe by removing a single, then it is mostly safe.
 int mostlySafeReportsCount(String input) {
   var count = 0;
   final lines = input.split('\n');
@@ -40,13 +45,13 @@ int mostlySafeReportsCount(String input) {
       continue;
     }
 
-    for (var j = 0; j < values.length - 1; j++) {
-      final alternative = [
+    for (var j = 0; j < values.length; j++) {
+      final variation = [
         for (var k = 0; k < values.length; k++)
           if (k != j) values[k]
       ];
 
-      if (_isSafe(alternative)) {
+      if (_isSafe(variation)) {
         count++;
         break;
       }
@@ -56,28 +61,30 @@ int mostlySafeReportsCount(String input) {
   return count;
 }
 
+enum _Order { unknown, ascending, descending }
+
 bool _isSafe(List<int> values) {
-  var order = Order.unknown;
+  var order = _Order.unknown;
 
   for (var i = 0; i < values.length - 1; i++) {
     final current = values[i];
     final next = values[i + 1];
 
-    if (order == Order.unknown) {
+    if (order == _Order.unknown) {
       if (current == next) return false;
       if (current < next) {
-        order = Order.ascending;
+        order = _Order.ascending;
       } else {
-        order = Order.descending;
+        order = _Order.descending;
       }
     }
 
-    if (order == Order.ascending) {
+    if (order == _Order.ascending) {
       final increasedBy = next - current;
       if (increasedBy < 1 || increasedBy > 3) return false;
     }
 
-    if (order == Order.descending) {
+    if (order == _Order.descending) {
       final decreasedBy = current - next;
       if (decreasedBy < 1 || decreasedBy > 3) return false;
     }
