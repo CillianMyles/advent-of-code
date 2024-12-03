@@ -16,15 +16,15 @@ void main() {
     });
   });
 
-  group('part 2 -> ...', () {
+  group('part 2 -> mostlySafeReportsCount', () {
     test('sample', () {
       final input = File('lib/day_02_sample.txt').readAsStringSync();
-      expect(safeReportsCount(input), -1);
+      expect(mostlySafeReportsCount(input), 4);
     });
 
     test('test', () {
       final input = File('lib/day_02_test.txt').readAsStringSync();
-      expect(safeReportsCount(input), -1);
+      expect(mostlySafeReportsCount(input), -1);
     });
   });
 }
