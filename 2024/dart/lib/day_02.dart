@@ -10,46 +10,52 @@ void main() {
   print('Part 2: $result2');
 }
 
+enum Order { unknown, ascending, descending }
+
 int safeReportsCount(String input) {
   var count = 0;
+  var order = Order.unknown;
   final lines = input.split('\n');
 
-  bool? ascending;
   for (var i = 0; i < lines.length; i++) {
     final line = lines[i];
     if (line.trim().isEmpty) break;
 
     final values = line.split(' ');
-
     for (var j = 0; j < values.length - 1; j++) {
       final current = int.parse(values[j]);
       final next = int.parse(values[j + 1]);
-      ascending ??= next > current;
 
-      if (current == next) {
-        ascending = null;
-        break;
+      if (order == Order.unknown) {
+        if (current == next) {
+          order = Order.unknown;
+          break;
+        } else if (current < next) {
+          order = Order.ascending;
+        } else {
+          order = Order.descending;
+        }
       }
 
-      if (ascending) {
+      if (order == Order.ascending) {
         final increasedBy = next - current;
         if (increasedBy < 1 || increasedBy > 3) {
-          ascending = null;
+          order = Order.unknown;
           break;
         }
       }
 
-      if (!ascending) {
+      if (order == Order.descending) {
         final decreasedBy = current - next;
         if (decreasedBy < 1 || decreasedBy > 3) {
-          ascending = null;
+          order = Order.unknown;
           break;
         }
       }
 
       if (j == values.length - 2) {
         count++;
-        ascending = null;
+        order = Order.unknown;
         break;
       }
     }
