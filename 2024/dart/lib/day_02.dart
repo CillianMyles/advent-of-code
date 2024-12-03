@@ -17,46 +17,37 @@ int safeReportsCount(String input) {
   final lines = input.split('\n');
 
   for (var i = 0; i < lines.length; i++) {
-    final line = lines[i];
-    if (line.trim().isEmpty) break;
+    final line = lines[i].trim();
+    if (line.isEmpty) break;
 
-    var order = Order.unknown;
-    final values = line.split(' ');
+    final values = line.split(' ').map(int.parse).toList();
+    if (_isSafe(values)) count++;
+  }
+  return count;
+}
+
+int mostlySafeReportsCount(String input) {
+  var count = 0;
+  final lines = input.split('\n');
+
+  for (var i = 0; i < lines.length; i++) {
+    final line = lines[i].trim();
+    if (line.isEmpty) break;
+
+    final values = line.split(' ').map(int.parse).toList();
+    if (_isSafe(values)) {
+      count++;
+      continue;
+    }
 
     for (var j = 0; j < values.length - 1; j++) {
-      final current = int.parse(values[j]);
-      final next = int.parse(values[j + 1]);
+      final alternative = [
+        for (var k = 0; k < values.length; k++)
+          if (k != j) values[k]
+      ];
 
-      if (order == Order.unknown) {
-        if (current == next) {
-          order = Order.unknown;
-          break;
-        } else if (current < next) {
-          order = Order.ascending;
-        } else {
-          order = Order.descending;
-        }
-      }
-
-      if (order == Order.ascending) {
-        final increasedBy = next - current;
-        if (increasedBy < 1 || increasedBy > 3) {
-          order = Order.unknown;
-          break;
-        }
-      }
-
-      if (order == Order.descending) {
-        final decreasedBy = current - next;
-        if (decreasedBy < 1 || decreasedBy > 3) {
-          order = Order.unknown;
-          break;
-        }
-      }
-
-      if (j == values.length - 2) {
+      if (_isSafe(alternative)) {
         count++;
-        order = Order.unknown;
         break;
       }
     }
@@ -65,89 +56,32 @@ int safeReportsCount(String input) {
   return count;
 }
 
-const _maxOutliers = 1;
+bool _isSafe(List<int> values) {
+  var order = Order.unknown;
 
-int mostlySafeReportsCount(String input) {
-  var count = 0;
-  final lines = input.split('\n');
+  for (var i = 0; i < values.length - 1; i++) {
+    final current = values[i];
+    final next = values[i + 1];
 
-  for (var i = 0; i < lines.length; i++) {
-    final line = lines[i];
-    if (line.trim().isEmpty) break;
-
-    var order = Order.unknown;
-    var outliers = 0;
-    final values = line.split(' ');
-    print('=' * 20);
-    print('values: [i=$i]: [len=${values.length}]: $values');
-
-    for (var j = 0; j < values.length - 1; j++) {
-      final current = int.parse(values[j]);
-      final next = int.parse(values[j + 1]);
-      print(
-        '[j=$j]: current: $current, next: $next, order: ${order.name}, outliers: $outliers',
-      );
-
-      if (order == Order.unknown) {
-        if (current == next) {
-          if (outliers < _maxOutliers) {
-            print('outliers++');
-            outliers++;
-            continue;
-          } else {
-            print('break: current == next');
-            order = Order.unknown;
-            outliers = 0;
-            break;
-          }
-        } else if (current < next) {
-          order = Order.ascending;
-        } else {
-          order = Order.descending;
-        }
+    if (order == Order.unknown) {
+      if (current == next) return false;
+      if (current < next) {
+        order = Order.ascending;
+      } else {
+        order = Order.descending;
       }
+    }
 
-      if (order == Order.ascending) {
-        final increasedBy = next - current;
-        if (increasedBy < 1 || increasedBy > 3) {
-          if (outliers < _maxOutliers) {
-            print('outliers++');
-            outliers++;
-            continue;
-          } else {
-            print('break: increasedBy: $increasedBy');
-            order = Order.unknown;
-            outliers = 0;
-            break;
-          }
-        }
-      }
+    if (order == Order.ascending) {
+      final increasedBy = next - current;
+      if (increasedBy < 1 || increasedBy > 3) return false;
+    }
 
-      if (order == Order.descending) {
-        final decreasedBy = current - next;
-        if (decreasedBy < 1 || decreasedBy > 3) {
-          if (outliers < _maxOutliers) {
-            print('outliers++');
-            outliers++;
-            continue;
-          } else {
-            print('break: decreasedBy: $decreasedBy');
-            order = Order.unknown;
-            outliers = 0;
-            break;
-          }
-        }
-      }
-
-      if (j == values.length - 2) {
-        count++;
-        print('safe: [i=$i]: [count=$count]: [${order.name}]: $line');
-        order = Order.unknown;
-        outliers = 0;
-        break;
-      }
+    if (order == Order.descending) {
+      final decreasedBy = current - next;
+      if (decreasedBy < 1 || decreasedBy > 3) return false;
     }
   }
 
-  return count;
+  return true;
 }
