@@ -14,14 +14,15 @@ enum Order { unknown, ascending, descending }
 
 int safeReportsCount(String input) {
   var count = 0;
-  var order = Order.unknown;
   final lines = input.split('\n');
 
   for (var i = 0; i < lines.length; i++) {
     final line = lines[i];
     if (line.trim().isEmpty) break;
 
+    var order = Order.unknown;
     final values = line.split(' ');
+
     for (var j = 0; j < values.length - 1; j++) {
       final current = int.parse(values[j]);
       final next = int.parse(values[j + 1]);
