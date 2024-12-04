@@ -61,30 +61,20 @@ int mostlySafeReportsCount(String input) {
   return count;
 }
 
-enum _Order { unknown, ascending, descending }
-
 bool _isSafe(List<int> values) {
-  var order = _Order.unknown;
+  bool? ascending;
 
   for (var i = 0; i < values.length - 1; i++) {
     final current = values[i];
     final next = values[i + 1];
 
-    if (order == _Order.unknown) {
-      if (current == next) return false;
-      if (current < next) {
-        order = _Order.ascending;
-      } else {
-        order = _Order.descending;
-      }
-    }
+    if (current == next) return false;
+    ascending ??= current < next;
 
-    if (order == _Order.ascending) {
+    if (ascending) {
       final increasedBy = next - current;
       if (increasedBy < 1 || increasedBy > 3) return false;
-    }
-
-    if (order == _Order.descending) {
+    } else {
       final decreasedBy = current - next;
       if (decreasedBy < 1 || decreasedBy > 3) return false;
     }

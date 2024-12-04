@@ -24,7 +24,7 @@ void main() {
 
     test('test', () {
       final input = File('lib/day_02_test.txt').readAsStringSync();
-      expect(mostlySafeReportsCount(input), -1);
+      expect(mostlySafeReportsCount(input), 290);
     });
   });
 }
