@@ -15,20 +15,14 @@ def determine_password(file: str, start: int = 50) -> int:
             distance = int(instruction[1:])
 
             if direction == "L":
-                if position - distance < 0:
-                    # overflow
-                    position = position - distance + 100
-                else:
-                    # normal
-                    position = position - distance
+                position = position - distance
+                while position < 0:
+                    position = position + 100
 
             elif direction == "R":
-                if position + distance > 99:
-                    # overflow
-                    position = position + distance - 100
-                else:
-                    # normal
-                    position = position + distance
+                position = position + distance
+                while position > 99:
+                    position = position - 100
 
             else:
                 raise Exception(f"unexpected direction: {direction}")
