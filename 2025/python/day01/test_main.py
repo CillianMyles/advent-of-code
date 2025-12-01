@@ -19,9 +19,15 @@ def test_part_2_sample_input():
     assert password == 6
 
 
-def test_part_2_example_input():
+def test_part_2_example_1():
     input = "p2-sample.input"
     password = determine_password_part_2(input)
+    assert password == 10
+
+
+def test_part_2_example_2():
+    input = "p2-sample.input"
+    password = determine_password_part_2(input, 0)
     assert password == 10
 
 
