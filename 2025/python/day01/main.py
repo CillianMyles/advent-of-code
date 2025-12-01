@@ -44,7 +44,8 @@ def determine_password(file: str, start: int = 50) -> int:
 
 
 def main():
-    determine_password("sample.input")
+    determine_password("p1-sample.input")
+    determine_password("p1-puzzle.input")
 
 
 if __name__ == "__main__":
