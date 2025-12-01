@@ -4,11 +4,11 @@ from pathlib import Path
 _directory = Path(__file__).parent
 
 
-def main():
-    position = 50
+def determine_password(file: str, start: int = 50) -> int:
+    position = start
     zero_count = 0
 
-    with open(f"{_directory}/sample.input", "r", encoding="utf-8") as file:
+    with open(f"{_directory}/{file}", "r", encoding="utf-8") as file:
         for line in file:
             instruction = line.strip()
             direction = instruction[0:1]
@@ -39,6 +39,12 @@ def main():
             print(
                 f"{instruction} - {direction} - {distance} - {position} - {zero_count}"
             )
+
+    return zero_count
+
+
+def main():
+    determine_password("sample.input")
 
 
 if __name__ == "__main__":
