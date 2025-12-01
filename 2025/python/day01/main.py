@@ -56,17 +56,15 @@ def determine_password_part_2(file: str, start: int = 50) -> int:
             if direction == "L":
                 position = position - distance
                 while position < 0:
-                    starting_position_l = position
                     position = position + 100
-                    if starting_position_l != 0 and position != 0:
+                    if starting_position != 0 and position != 0:
                         zero_count = zero_count + 1
 
             elif direction == "R":
                 position = position + distance
                 while position > 99:
-                    starting_position_r = position
                     position = position - 100
-                    if starting_position_r != 0 and position != 0:
+                    if starting_position != 0 and position != 0:
                         zero_count = zero_count + 1
 
             else:
@@ -81,9 +79,9 @@ def determine_password_part_2(file: str, start: int = 50) -> int:
 
 
 def part_2():
-    determine_password_part_2("p2-sample.input", 0)
+    # determine_password_part_2("p2-sample.input", 0)
     # determine_password_part_2("p1-sample.input")
-    # determine_password_part_2("p1-puzzle.input")
+    determine_password_part_2("p1-puzzle.input")
 
 
 def main():
