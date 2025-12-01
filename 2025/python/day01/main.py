@@ -53,6 +53,9 @@ def determine_password_part_2(file: str, start: int = 50) -> int:
             distance = int(instruction[1:])
             starting_position = position
 
+            if distance == 0:
+                raise Exception("cannot move 0 clicks")
+
             if direction == "L":
                 position = position - distance
                 while position < 0:
