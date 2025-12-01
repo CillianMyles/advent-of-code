@@ -56,25 +56,18 @@ def determine_password_part_2(file: str, start: int = 50) -> int:
             if distance == 0:
                 raise Exception("cannot move 0 clicks")
 
-            if direction == "L":
-                position = position - distance
-                while position < 0:
-                    position = position + 100
-                    if starting_position != 0 and position != 0:
-                        zero_count = zero_count + 1
+            for _ in range(distance):
+                if direction == "L":
+                    position = (position - 1) % 100
 
-            elif direction == "R":
-                position = position + distance
-                while position > 99:
-                    position = position - 100
-                    if starting_position != 0 and position != 0:
-                        zero_count = zero_count + 1
+                elif direction == "R":
+                    position = (position + 1) % 100
 
-            else:
-                raise Exception(f"unexpected direction: {direction}")
+                else:
+                    raise Exception(f"unexpected direction: {direction}")
 
-            if position == 0:
-                zero_count = zero_count + 1
+                if position == 0:
+                    zero_count += 1
 
             print(f"{starting_position} - {instruction} - {position} - {zero_count}")
 
