@@ -5,8 +5,8 @@ from typing import Iterable, Tuple
 _directory = Path(__file__).parent
 
 
-def read_instructions(filename: str) -> Iterable[Tuple[str, int]]:
-    path = _directory / filename
+def read_instructions(file: str) -> Iterable[Tuple[str, int]]:
+    path = _directory / file
     with path.open("r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
