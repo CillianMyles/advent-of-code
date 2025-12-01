@@ -79,8 +79,8 @@ def determine_password_part_2(file: str, start: int = 50) -> int:
 
 
 def part_2():
-    determine_password_part_2("p1-sample.input")
-    # determine_password_part_2("p1-puzzle.input")
+    # determine_password_part_2("p1-sample.input")
+    determine_password_part_2("p1-puzzle.input")
 
 
 def main():
