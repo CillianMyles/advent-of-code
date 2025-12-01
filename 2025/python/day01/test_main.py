@@ -32,6 +32,6 @@ def test_part_2_example_2():
 
 
 def test_part_2_puzzle_input():
-    input = "p2-sample.input"
+    input = "p1-puzzle.input"
     password = determine_password_part_2(input)
-    assert password > 5130
+    assert password == 6223

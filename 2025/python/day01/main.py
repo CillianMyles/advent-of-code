@@ -1,87 +1,76 @@
 from pathlib import Path
+from typing import Iterable, Tuple
 
 
 _directory = Path(__file__).parent
+
+
+def read_instructions(filename: str) -> Iterable[Tuple[str, int]]:
+    path = _directory / filename
+    with path.open("r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            direction = line[0]
+            distance = int(line[1:])
+            yield direction, distance
 
 
 def determine_password_part_1(file: str, start: int = 50) -> int:
     position = start
     zero_count = 0
 
-    with open(f"{_directory}/{file}", "r", encoding="utf-8") as file:
-        for line in file:
-            instruction = line.strip()
-            direction = instruction[0:1]
-            distance = int(instruction[1:])
+    for direction, distance in read_instructions(file):
+        if direction == "L":
+            position = (position - distance) % 100
+        elif direction == "R":
+            position = (position + distance) % 100
+        else:
+            raise ValueError(f"unexpected direction: {direction!r}")
 
-            if direction == "L":
-                position = position - distance
-                while position < 0:
-                    position = position + 100
-
-            elif direction == "R":
-                position = position + distance
-                while position > 99:
-                    position = position - 100
-
-            else:
-                raise Exception(f"unexpected direction: {direction}")
-
-            if position == 0:
-                zero_count = zero_count + 1
-
-            print(
-                f"{instruction} - {direction} - {distance} - {position} - {zero_count}"
-            )
+        if position == 0:
+            zero_count += 1
 
     return zero_count
-
-
-def part_1():
-    determine_password_part_1("p1-sample.input")
-    determine_password_part_1("p1-puzzle.input")
 
 
 def determine_password_part_2(file: str, start: int = 50) -> int:
     position = start
     zero_count = 0
 
-    with open(f"{_directory}/{file}", "r", encoding="utf-8") as file:
-        for line in file:
-            instruction = line.strip()
-            direction = instruction[0:1]
-            distance = int(instruction[1:])
-            starting_position = position
+    for direction, distance in read_instructions(file):
+        if direction not in ["L", "R"]:
+            raise ValueError(f"unexpected direction: {direction!r}")
 
-            if distance == 0:
-                raise Exception("cannot move 0 clicks")
+        for _ in range(distance):
+            if direction == "L":
+                position = (position - 1) % 100
+            else:  # direction == "R"
+                position = (position + 1) % 100
 
-            for _ in range(distance):
-                if direction == "L":
-                    position = (position - 1) % 100
-
-                elif direction == "R":
-                    position = (position + 1) % 100
-
-                else:
-                    raise Exception(f"unexpected direction: {direction}")
-
-                if position == 0:
-                    zero_count += 1
-
-            print(f"{starting_position} - {instruction} - {position} - {zero_count}")
+            if position == 0:
+                zero_count += 1
 
     return zero_count
 
 
+def part_1():
+    sample = determine_password_part_1("p1-sample.input")
+    puzzle = determine_password_part_1("p1-puzzle.input")
+    print("Part 1 - Sample:", sample)
+    print("Part 1 - Puzzle:", puzzle)
+
+
 def part_2():
-    # determine_password_part_2("p2-sample.input", 0)
-    # determine_password_part_2("p1-sample.input")
-    determine_password_part_2("p1-puzzle.input")
+    sample = determine_password_part_2("p1-sample.input")
+    puzzle = determine_password_part_2("p1-puzzle.input")
+    print("Part 2 - Sample:", sample)
+    print("Part 2 - Puzzle:", puzzle)
 
 
 def main():
-    # part_1()
+    part_1()
     part_2()
 
 
