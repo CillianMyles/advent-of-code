@@ -37,9 +37,13 @@ def determine_password(file: str, start: int = 50) -> int:
     return zero_count
 
 
-def main():
+def part_1():
     determine_password("p1-sample.input")
     determine_password("p1-puzzle.input")
+
+
+def main():
+    part_1()
 
 
 if __name__ == "__main__":
