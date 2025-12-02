@@ -31,9 +31,9 @@ def _sum_invalid_ids_part_1(file: str) -> int:
                     rhs = number[start_rhs:]
                     if lhs == rhs:
                         invalid.append(i)
-                    print(
-                        f"number: {number} - length: {length} - end_lhs: {end_lhs} - start_rhs: {start_rhs} - lhs: {lhs} - rhs: {rhs} - inv: {lhs == rhs}"
-                    )
+                    # print(
+                    #     f"number: {number} - length: {length} - end_lhs: {end_lhs} - start_rhs: {start_rhs} - lhs: {lhs} - rhs: {rhs} - inv: {lhs == rhs}"
+                    # )
 
     for value in invalid:
         sum += value
@@ -43,7 +43,9 @@ def _sum_invalid_ids_part_1(file: str) -> int:
 
 def part_1():
     sample = _sum_invalid_ids_part_1("p1-sample.input")
+    puzzle = _sum_invalid_ids_part_1("p1-puzzle.input")
     print("Part 1 - Sample:", sample)
+    print("Part 1 - Puzzle:", puzzle)
 
 
 def main():
