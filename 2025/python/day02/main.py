@@ -65,13 +65,6 @@ def sum_invalid_ids_part_1(file: str) -> int:
     return sum
 
 
-def part_1():
-    sample = sum_invalid_ids_part_1("p1-sample.input")
-    puzzle = sum_invalid_ids_part_1("p1-puzzle.input")
-    print("Part 1 - Sample:", sample)
-    print("Part 1 - Puzzle:", puzzle)
-
-
 def sum_invalid_ids_part_2(file: str) -> int:
     invalid = []
 
@@ -95,6 +88,13 @@ def sum_invalid_ids_part_2(file: str) -> int:
         sum += value
 
     return sum
+
+
+def part_1():
+    sample = sum_invalid_ids_part_1("p1-sample.input")
+    puzzle = sum_invalid_ids_part_1("p1-puzzle.input")
+    print("Part 1 - Sample:", sample)
+    print("Part 1 - Puzzle:", puzzle)
 
 
 def part_2():
