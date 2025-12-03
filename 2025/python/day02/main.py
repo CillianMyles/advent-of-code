@@ -30,9 +30,9 @@ def _chunks(input, n) -> List[int]:
 
 def _all_equal(items: List[Any]) -> bool:
     assert len(items) > 0, "expected non-empty list"
-    previous = items[0]
+    first = items[0]
     for item in items:
-        if item != previous:
+        if item != first:
             return False
     return True
 
