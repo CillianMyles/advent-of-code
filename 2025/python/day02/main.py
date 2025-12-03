@@ -5,8 +5,9 @@ from typing import List, Any, Tuple, Iterable
 _directory = Path(__file__).parent
 
 
-def _load_ids(file: str) -> Iterable[Tuple[int, int]]:
-    with open(file, "r", encoding="utf-8") as f:
+def _load_ids(filename: str) -> Iterable[Tuple[int, int]]:
+    filepath = _directory / filename
+    with open(filepath, "r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
             if not line:
@@ -36,10 +37,10 @@ def _all_equal(items: List[Any]) -> bool:
     return True
 
 
-def sum_invalid_ids_part_1(file: str) -> int:
+def sum_invalid_ids_part_1(filename: str) -> int:
     invalid = []
 
-    for lower, upper in _load_ids(f"{_directory}/{file}"):
+    for lower, upper in _load_ids(filename):
         for i in range(lower, upper + 1):
             number = str(i)
             length = len(number)
@@ -59,10 +60,10 @@ def sum_invalid_ids_part_1(file: str) -> int:
     return sum
 
 
-def sum_invalid_ids_part_2(file: str) -> int:
+def sum_invalid_ids_part_2(filename: str) -> int:
     invalid = []
 
-    for lower, upper in _load_ids(f"{_directory}/{file}"):
+    for lower, upper in _load_ids(filename):
         for i in range(lower, upper + 1):
             number = str(i)
             length = len(number)
