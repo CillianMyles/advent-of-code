@@ -1,13 +1,11 @@
 from pathlib import Path
-from typing import List, Any, Tuple
+from typing import List, Any, Tuple, Iterable
 
 
 _directory = Path(__file__).parent
 
 
-def _load_ids(file: str) -> List[Tuple[int, int]]:
-    ids = []
-
+def _load_ids(file: str) -> Iterable[Tuple[int, int]]:
     with open(file, "r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
@@ -19,9 +17,7 @@ def _load_ids(file: str) -> List[Tuple[int, int]]:
                 assert len(bounds) == 2, "expected range had 2 bounds"
                 lower = int(bounds[0])
                 upper = int(bounds[1])
-                ids.append((lower, upper))
-
-    return ids
+                yield lower, upper
 
 
 def _chunks(input, n) -> List[int]:
