@@ -48,8 +48,64 @@ def part_1():
     print("Part 1 - Puzzle:", puzzle)
 
 
+def _chunks(input, n):
+    chunks = []
+    for i in range(0, len(input), n):
+        chunks.append(input[i : i + n])
+    return chunks
+
+
+def _sum_invalid_ids_part_2(file: str) -> int:
+    invalid = []
+    sum = 0
+
+    with open(f"{_directory}/{file}", "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            id_ranges = line.split(",")
+            for id_range in id_ranges:
+                bounds = id_range.split("-")
+                assert len(bounds) == 2, "expected range had 2 bounds"
+                lower = int(bounds[0])
+                upper = int(bounds[1])
+                for i in range(lower, upper + 1):
+                    number = str(i)
+                    length = len(number)
+                    for j in range(2, length + 1):
+                        if length % j != 0:
+                            continue
+                        items = _chunks(number, j)
+                        equal = True
+                        for k in range(len(items)):
+                            if k == 0:
+                                continue
+                            elif items[k] != items[k - 1]:
+                                equal = False
+                                break
+                        if not equal:
+                            invalid.append(i)
+                        # print(
+                        #     f"number: {number} - length: {length} - end_lhs: {end_lhs} - start_rhs: {start_rhs} - lhs: {lhs} - rhs: {rhs} - inv: {lhs == rhs}"
+                        # )
+
+    for value in invalid:
+        sum += value
+
+    return sum
+
+
+def part_2():
+    sample = _sum_invalid_ids_part_2("p1-sample.input")
+    puzzle = _sum_invalid_ids_part_2("p1-puzzle.input")
+    print("Part 2 - Sample:", sample)
+    print("Part 2 - Puzzle:", puzzle)
+
+
 def main():
-    part_1()
+    # part_1()
+    part_2()
 
 
 if __name__ == "__main__":
