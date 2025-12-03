@@ -15,7 +15,7 @@ def _load_ids(filename: str) -> Iterable[Tuple[int, int]]:
             id_ranges = line.split(",")
             for id_range in id_ranges:
                 bounds = id_range.split("-")
-                assert len(bounds) == 2, "expected range had 2 bounds"
+                assert len(bounds) == 2, "expected range has 2 bounds"
                 lower = int(bounds[0])
                 upper = int(bounds[1])
                 yield lower, upper
@@ -29,7 +29,7 @@ def _chunks(input, n) -> List[int]:
 
 
 def _all_equal(items: List[Any]) -> bool:
-    assert len(items) > 0, "expected not empty list"
+    assert len(items) > 0, "expected non-empty list"
     previous = items[0]
     for item in items:
         if item != previous:
