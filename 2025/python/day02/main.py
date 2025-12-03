@@ -38,7 +38,7 @@ def _all_equal(items: List[Any]) -> bool:
 
 
 def sum_invalid_ids_part_1(filename: str) -> int:
-    invalid = []
+    sum = 0
 
     for lower, upper in _load_ids(filename):
         for i in range(lower, upper + 1):
@@ -51,17 +51,13 @@ def sum_invalid_ids_part_1(filename: str) -> int:
             lhs = number[: end_lhs + 1]
             rhs = number[start_rhs:]
             if lhs == rhs:
-                invalid.append(i)
-
-    sum = 0
-    for value in invalid:
-        sum += value
+                sum += i
 
     return sum
 
 
 def sum_invalid_ids_part_2(filename: str) -> int:
-    invalid = []
+    sum = 0
 
     for lower, upper in _load_ids(filename):
         for i in range(lower, upper + 1):
@@ -73,12 +69,8 @@ def sum_invalid_ids_part_2(filename: str) -> int:
                 items = _chunks(number, j)
                 all_equal = _all_equal(items)
                 if all_equal:
-                    invalid.append(i)
+                    sum += i
                     break
-
-    sum = 0
-    for value in invalid:
-        sum += value
 
     return sum
 
