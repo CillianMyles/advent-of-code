@@ -39,9 +39,7 @@ def _all_equal(items: List[Any]) -> bool:
 def sum_invalid_ids_part_1(file: str) -> int:
     invalid = []
 
-    id_ranges = _load_ids(f"{_directory}/{file}")
-    for id_range in id_ranges:
-        (lower, upper) = id_range
+    for lower, upper in _load_ids(f"{_directory}/{file}"):
         for i in range(lower, upper + 1):
             number = str(i)
             length = len(number)
@@ -64,9 +62,7 @@ def sum_invalid_ids_part_1(file: str) -> int:
 def sum_invalid_ids_part_2(file: str) -> int:
     invalid = []
 
-    id_ranges = _load_ids(f"{_directory}/{file}")
-    for id_range in id_ranges:
-        (lower, upper) = id_range
+    for lower, upper in _load_ids(f"{_directory}/{file}"):
         for i in range(lower, upper + 1):
             number = str(i)
             length = len(number)
