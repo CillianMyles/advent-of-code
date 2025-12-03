@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List, Iterable, Tuple
+from typing import List, Any
 
 
 _directory = Path(__file__).parent
@@ -48,11 +48,20 @@ def part_1():
     print("Part 1 - Puzzle:", puzzle)
 
 
-def _chunks(input, n):
+def _chunks(input, n) -> List[int]:
     chunks = []
     for i in range(0, len(input), n):
         chunks.append(input[i : i + n])
     return chunks
+
+
+def _all_equal(items: List[Any]) -> bool:
+    assert len(items) > 0, "expected not empty list"
+    previous = items[0]
+    for item in items:
+        if item != previous:
+            return False
+    return True
 
 
 def _sum_invalid_ids_part_2(file: str) -> int:
@@ -77,17 +86,10 @@ def _sum_invalid_ids_part_2(file: str) -> int:
                         if length % j != 0:
                             continue
                         items = _chunks(number, j)
-                        previous = items[0]
-                        equal = True
-                        for item in items:
-                            if item != previous:
-                                equal = False
-                                break
-                        if equal:
+                        all_equal = _all_equal(items)
+                        if all_equal:
                             invalid.append(i)
-                        print(
-                            f"number: {number} - length: {length} - items: {items} - equal: {equal}"
-                        )
+                            break
 
     for value in invalid:
         sum += value
