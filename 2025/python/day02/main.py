@@ -73,22 +73,21 @@ def _sum_invalid_ids_part_2(file: str) -> int:
                 for i in range(lower, upper + 1):
                     number = str(i)
                     length = len(number)
-                    for j in range(2, length + 1):
+                    for j in range(1, length):
                         if length % j != 0:
                             continue
                         items = _chunks(number, j)
+                        previous = items[0]
                         equal = True
-                        for k in range(len(items)):
-                            if k == 0:
-                                continue
-                            elif items[k] != items[k - 1]:
+                        for item in items:
+                            if item != previous:
                                 equal = False
                                 break
-                        if not equal:
+                        if equal:
                             invalid.append(i)
-                        # print(
-                        #     f"number: {number} - length: {length} - end_lhs: {end_lhs} - start_rhs: {start_rhs} - lhs: {lhs} - rhs: {rhs} - inv: {lhs == rhs}"
-                        # )
+                        print(
+                            f"number: {number} - length: {length} - items: {items} - equal: {equal}"
+                        )
 
     for value in invalid:
         sum += value
