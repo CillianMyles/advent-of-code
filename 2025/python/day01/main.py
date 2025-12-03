@@ -5,8 +5,8 @@ from typing import Iterable, Tuple
 _directory = Path(__file__).parent
 
 
-def read_instructions(file: str) -> Iterable[Tuple[str, int]]:
-    path = _directory / file
+def read_instructions(filename: str) -> Iterable[Tuple[str, int]]:
+    path = _directory / filename
     with path.open("r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
@@ -17,11 +17,11 @@ def read_instructions(file: str) -> Iterable[Tuple[str, int]]:
             yield direction, distance
 
 
-def determine_password_part_1(file: str, start: int = 50) -> int:
+def determine_password_part_1(filename: str, start: int = 50) -> int:
     position = start
     zero_count = 0
 
-    for direction, distance in read_instructions(file):
+    for direction, distance in read_instructions(filename):
         if direction == "L":
             position = (position - distance) % 100
         elif direction == "R":
@@ -35,11 +35,11 @@ def determine_password_part_1(file: str, start: int = 50) -> int:
     return zero_count
 
 
-def determine_password_part_2(file: str, start: int = 50) -> int:
+def determine_password_part_2(filename: str, start: int = 50) -> int:
     position = start
     zero_count = 0
 
-    for direction, distance in read_instructions(file):
+    for direction, distance in read_instructions(filename):
         if direction not in ["L", "R"]:
             raise ValueError(f"unexpected direction: {direction!r}")
 
