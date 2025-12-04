@@ -1,5 +1,6 @@
 from pathlib import Path
 from typing import List, Any, Tuple, Iterable
+from utils import read_lines
 
 
 _directory = Path(__file__).parent
@@ -7,18 +8,14 @@ _directory = Path(__file__).parent
 
 def _load_ids(filename: str) -> Iterable[Tuple[int, int]]:
     filepath = _directory / filename
-    with open(filepath, "r", encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            id_ranges = line.split(",")
-            for id_range in id_ranges:
-                bounds = id_range.split("-")
-                assert len(bounds) == 2, "expected range has 2 bounds"
-                lower = int(bounds[0])
-                upper = int(bounds[1])
-                yield lower, upper
+    for line in read_lines(filepath):
+        id_ranges = line.split(",")
+        for id_range in id_ranges:
+            bounds = id_range.split("-")
+            assert len(bounds) == 2, "expected range has 2 bounds"
+            lower = int(bounds[0])
+            upper = int(bounds[1])
+            yield lower, upper
 
 
 def _chunks(input, n) -> List[int]:

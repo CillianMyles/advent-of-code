@@ -1,20 +1,17 @@
 from pathlib import Path
 from typing import Iterable, Tuple
+from utils import read_lines
 
 
 _directory = Path(__file__).parent
 
 
 def read_instructions(filename: str) -> Iterable[Tuple[str, int]]:
-    path = _directory / filename
-    with path.open("r", encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            direction = line[0]
-            distance = int(line[1:])
-            yield direction, distance
+    filepath = _directory / filename
+    for line in read_lines(filepath):
+        direction = line[0]
+        distance = int(line[1:])
+        yield direction, distance
 
 
 def determine_password_part_1(filename: str, start: int = 50) -> int:
