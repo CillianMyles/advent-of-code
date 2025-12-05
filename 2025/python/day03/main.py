@@ -22,10 +22,7 @@ def calculate_part_1(filename: str) -> int:
         length = len(line)
         idx_first = 0
         idx_second = 1
-        for i in range(length):
-            if i == 0:
-                continue
-
+        for i in range(1, length):
             current_first = int(line[idx_first])
             candidate_first = int(line[i - 1])
 
