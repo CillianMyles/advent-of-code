@@ -16,7 +16,7 @@ def _read_lines(filename: str) -> Iterable[str]:
 
 
 def calculate_part_1(filename: str) -> int:
-    sum = 0
+    total_joltage = 0
 
     for line in _read_lines(filename):
         length = len(line)
@@ -36,9 +36,9 @@ def calculate_part_1(filename: str) -> int:
                 idx_second = i
 
         joltage = int(f"{line[idx_first]}{line[idx_second]}")
-        sum += joltage
+        total_joltage += joltage
 
-    return sum
+    return total_joltage
 
 
 def calculate_part_2(filename: str) -> int:
@@ -60,15 +60,21 @@ def calculate_part_2(filename: str) -> int:
                 continue
 
             for j in range(i - num_batteries, i):
-                candidates[j] = j
+                if len(candidates) - j == 1:
+                    candidates.append(j)
+                else:
+                    candidates[j] = j
 
             for j in range(len(candidates)):
-                if candidates[j] > indeces[j]:
+                if len(indeces) > j and candidates[j] > indeces[j]:
                     for k in range(j, len(candidates)):
                         indeces[k] = candidates[k]
 
+        text = ""
         for index in indeces:
-            total_joltage += int(index)
+            text += line[index]
+
+        total_joltage += int(text)
 
     return total_joltage
 
