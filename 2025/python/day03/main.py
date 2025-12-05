@@ -17,6 +17,29 @@ def _read_lines(filename: str) -> Iterable[str]:
 
 def calculate_part_1(filename: str) -> int:
     sum = 0
+
+    for line in _read_lines(filename):
+        length = len(line)
+        idx_first = 0
+        idx_second = 1
+        for i in range(length):
+            if i == 0 or i == length - 1:
+                continue
+
+            current_first = int(line[idx_first])
+            candidate_first = int(line[i - 1])
+
+            current_second = int(line[idx_second])
+            candidate_second = int(line[1])
+
+            if candidate_first > current_first:
+                idx_first = i
+                idx_second = i + 1
+            elif candidate_second > current_second:
+                idx_second = i
+
+        sum += int(f"{line[idx_first]}{line[idx_second]}")
+
     return sum
 
 
