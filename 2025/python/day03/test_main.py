@@ -10,7 +10,7 @@ def test_part_1_sample_input():
 def test_part_1_puzzle_input():
     input = "p1-puzzle.input"
     password = calculate_part_1(input)
-    assert password == -1
+    assert password == 17074
 
 
 def test_part_2_sample_input():
