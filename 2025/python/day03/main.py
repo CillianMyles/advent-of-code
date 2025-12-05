@@ -23,7 +23,7 @@ def calculate_part_1(filename: str) -> int:
         idx_first = 0
         idx_second = 1
         for i in range(length):
-            if i == 0 or i == length - 1:
+            if i == 0:
                 continue
 
             current_first = int(line[idx_first])
@@ -39,7 +39,6 @@ def calculate_part_1(filename: str) -> int:
                 idx_second = i
 
         joltage = int(f"{line[idx_first]}{line[idx_second]}")
-        print(f"joltage: {joltage}")
         sum += joltage
 
     return sum
