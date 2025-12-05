@@ -42,8 +42,35 @@ def calculate_part_1(filename: str) -> int:
 
 
 def calculate_part_2(filename: str) -> int:
-    sum = 0
-    return sum
+    num_batteries = 12
+    total_joltage = 0
+
+    for line in _read_lines(filename):
+        length = len(line)
+        assert length >= num_batteries, "expected line to have at least 12 batteries"
+
+        indeces = []
+        candidates = []
+        for i in range(num_batteries):
+            indeces.append(i)
+            candidates.append(i)
+
+        for i in range(length):
+            if i < num_batteries:
+                continue
+
+            for j in range(i - num_batteries, i):
+                candidates[j] = j
+
+            for j in range(len(candidates)):
+                if candidates[j] > indeces[j]:
+                    for k in range(j, len(candidates)):
+                        indeces[k] = candidates[k]
+
+        for index in indeces:
+            total_joltage += int(index)
+
+    return total_joltage
 
 
 def part_1():
