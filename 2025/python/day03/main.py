@@ -30,15 +30,17 @@ def calculate_part_1(filename: str) -> int:
             candidate_first = int(line[i - 1])
 
             current_second = int(line[idx_second])
-            candidate_second = int(line[1])
+            candidate_second = int(line[i])
 
             if candidate_first > current_first:
-                idx_first = i
-                idx_second = i + 1
+                idx_first = i - 1
+                idx_second = i
             elif candidate_second > current_second:
                 idx_second = i
 
-        sum += int(f"{line[idx_first]}{line[idx_second]}")
+        joltage = int(f"{line[idx_first]}{line[idx_second]}")
+        print(f"joltage: {joltage}")
+        sum += joltage
 
     return sum
 
