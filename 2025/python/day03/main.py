@@ -45,7 +45,7 @@ def calculate_part_2(filename: str) -> int:
     num_batteries = 12
     total_joltage = 0
 
-    for line in _read_lines(filename):
+    for l, line in enumerate(_read_lines(filename)):
         length = len(line)
         assert length >= num_batteries, "expected line to have at least 12 batteries"
 
@@ -73,7 +73,7 @@ def calculate_part_2(filename: str) -> int:
                 value = int(line[values[j]])
                 # print(f"[j={j}] - Candidate: {candidate} - Value: {value} - G: {candidate > value}")
                 if candidate > value:
-                    print(f"{candidate} > {value}")
+                    print(f"{candidate} > {value} - l:{l} - i:{i} - j:{j}")
                     for k in range(j, len(candidates)):
                         # print(f"[k={k}] - Candidate: {candidates[k]}")
                         values[k] = candidates[k]
