@@ -49,16 +49,14 @@ def calculate_part_2(filename: str) -> int:
         length = len(line)
         assert length >= num_batteries, "expected line to have at least 12 batteries"
 
+        print(f"Line: {line} - Length: {length}")
+
         candidates = []
         indeces = []
 
         for i in range(num_batteries):
             candidates.append(i)
             indeces.append(i)
-
-        print(
-            f"Line: {line} - Length: {length} - Candidates: {candidates} - Indeces: {indeces}"
-        )
 
         for i in range(length):
             if i < num_batteries:
@@ -69,7 +67,7 @@ def calculate_part_2(filename: str) -> int:
                 candidates.append(j)
 
             for j in range(len(candidates)):
-                if candidates[j] > indeces[j]:
+                if int(line[candidates[j]]) > int(line[indeces[j]]):
                     for k in range(j, len(candidates)):
                         indeces[k] = candidates[k]
 
@@ -79,8 +77,8 @@ def calculate_part_2(filename: str) -> int:
         for index in indeces:
             text += line[index]
 
-        print(text)
         total_joltage += int(text)
+        print(f"Answer: {text} - Indeces: {indeces}\n")
 
     return total_joltage
 
