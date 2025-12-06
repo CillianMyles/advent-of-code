@@ -49,14 +49,14 @@ def calculate_part_2(filename: str) -> int:
         length = len(line)
         assert length >= num_batteries, "expected line to have at least 12 batteries"
 
-        print(f"Line: {line} - Length: {length}")
+        # print(f"Line: {line} - Length: {length}")
 
         candidates = []
-        indeces = []
+        values = []
 
         for i in range(num_batteries):
             candidates.append(i)
-            indeces.append(i)
+            values.append(i)
 
         for i in range(length):
             if i < num_batteries:
@@ -64,21 +64,29 @@ def calculate_part_2(filename: str) -> int:
 
             candidates.clear()
             for j in range(i - num_batteries, i):
+                # print(f"[j={j}]")
                 candidates.append(j)
+            assert len(candidates) == num_batteries
 
             for j in range(len(candidates)):
-                if int(line[candidates[j]]) > int(line[indeces[j]]):
+                candidate = int(line[candidates[j]])
+                value = int(line[values[j]])
+                # print(f"[j={j}] - Candidate: {candidate} - Value: {value} - G: {candidate > value}")
+                if candidate > value:
+                    print(f"{candidate} > {value}")
                     for k in range(j, len(candidates)):
-                        indeces[k] = candidates[k]
+                        # print(f"[k={k}] - Candidate: {candidates[k]}")
+                        values[k] = candidates[k]
+            assert len(values) == num_batteries
 
-            print(f"[{i}] - Candidates: {candidates} - Indeces: {indeces}")
+            # print(f"[i={i}] - Candidates: {candidates} - Values: {values}")
 
         text = ""
-        for index in indeces:
+        for index in values:
             text += line[index]
 
         total_joltage += int(text)
-        print(f"Answer: {text} - Indeces: {indeces}\n")
+        # print(f"Answer: {text} - Values: {values}\n")
 
     return total_joltage
 
