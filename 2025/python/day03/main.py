@@ -15,39 +15,12 @@ def _read_lines(filename: str) -> Iterable[str]:
             yield line
 
 
-def calculate_part_1(filename: str) -> int:
+def _calculate_total_joltage(filename: str, num_batteries: int) -> int:
     total_joltage = 0
 
     for line in _read_lines(filename):
         length = len(line)
-        idx_first = 0
-        idx_second = 1
-        for i in range(1, length):
-            current_first = int(line[idx_first])
-            candidate_first = int(line[i - 1])
-
-            current_second = int(line[idx_second])
-            candidate_second = int(line[i])
-
-            if candidate_first > current_first:
-                idx_first = i - 1
-                idx_second = i
-            elif candidate_second > current_second:
-                idx_second = i
-
-        joltage = int(f"{line[idx_first]}{line[idx_second]}")
-        total_joltage += joltage
-
-    return total_joltage
-
-
-def calculate_part_2(filename: str) -> int:
-    num_batteries = 12
-    total_joltage = 0
-
-    for line in _read_lines(filename):
-        length = len(line)
-        assert length >= num_batteries, "expected line to have at least 12 batteries"
+        assert length >= num_batteries, "line legnth shorter than expected"
 
         candidates = []
         values = []
@@ -66,10 +39,8 @@ def calculate_part_2(filename: str) -> int:
             assert len(candidates) == num_batteries
 
             for j in range(len(candidates)):
-                idx_c = candidates[j]
-                idx_v = values[j]
-                candidate = int(line[idx_c])
-                value = int(line[idx_v])
+                candidate = int(line[candidates[j]])
+                value = int(line[values[j]])
                 if candidate > value:
                     for k in range(j, len(candidates)):
                         values[k] = candidates[k]
@@ -82,6 +53,20 @@ def calculate_part_2(filename: str) -> int:
         total_joltage += int(text)
 
     return total_joltage
+
+
+def calculate_part_1(filename: str) -> int:
+    return _calculate_total_joltage(
+        filename=filename,
+        num_batteries=2,
+    )
+
+
+def calculate_part_2(filename: str) -> int:
+    return _calculate_total_joltage(
+        filename=filename,
+        num_batteries=12,
+    )
 
 
 def part_1():
