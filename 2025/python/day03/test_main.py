@@ -22,4 +22,4 @@ def test_part_2_sample_input():
 def test_part_2_puzzle_input():
     input = "p1-puzzle.input"
     password = calculate_part_2(input)
-    assert password == -1
+    assert password == 169512729575727
