@@ -48,7 +48,6 @@ def calculate_part_2(filename: str) -> int:
     for l, line in enumerate(_read_lines(filename)):
         length = len(line)
         assert length >= num_batteries, "expected line to have at least 12 batteries"
-
         # print(f"Line: {line} - Length: {length}")
 
         candidates = []
@@ -63,22 +62,22 @@ def calculate_part_2(filename: str) -> int:
                 continue
 
             candidates.clear()
-            for j in range(i - num_batteries, i):
-                # print(f"[j={j}]")
+            for j in range(i - num_batteries + 1, i + 1):
                 candidates.append(j)
             assert len(candidates) == num_batteries
 
             for j in range(len(candidates)):
-                candidate = int(line[candidates[j]])
-                value = int(line[values[j]])
-                # print(f"[j={j}] - Candidate: {candidate} - Value: {value} - G: {candidate > value}")
+                idx_c = candidates[j]
+                idx_v = values[j]
+                candidate = int(line[idx_c])
+                value = int(line[idx_v])
+                # print(f"[j={j}] - Candidate[{idx_c}]: {candidate} - Value[{idx_v}]: {value} - G: {candidate > value}")
                 if candidate > value:
-                    print(f"{candidate} > {value} - l:{l} - i:{i} - j:{j}")
+                    # print(f"{candidate} > {value} - l:{l} - i:{i} - j:{j}")
                     for k in range(j, len(candidates)):
                         # print(f"[k={k}] - Candidate: {candidates[k]}")
                         values[k] = candidates[k]
             assert len(values) == num_batteries
-
             # print(f"[i={i}] - Candidates: {candidates} - Values: {values}")
 
         text = ""
