@@ -84,7 +84,7 @@ def part_2():
 
 
 def main():
-    # part_1()
+    part_1()
     part_2()
 
 
