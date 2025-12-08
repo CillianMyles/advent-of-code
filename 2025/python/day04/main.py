@@ -29,6 +29,7 @@ def calculate_part_1(filename: str) -> int:
             assert row_length == len(row), "unexpected row length"
         matrix.append(row)
         num_rows += 1
+        print(f"line: {line} - row: {row} - len: {row_length}")
     assert num_rows, "should be a non-zero number of rows"
     assert row_length, "rows should have a non-zero length"
 
