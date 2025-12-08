@@ -22,7 +22,7 @@ def calculate_part_1(filename: str) -> int:
     row_length = None
     matrix: List[List[str]] = []
     for line in _read_lines(filename):
-        row = line.split()
+        row = list(line)
         if row_length is None:
             row_length = len(row)
         else:
