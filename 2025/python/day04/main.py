@@ -33,9 +33,80 @@ def calculate_part_1(filename: str) -> int:
     assert num_rows, "should be a non-zero number of rows"
     assert row_length, "rows should have a non-zero length"
 
+    range_x = range(row_length - 1)
+    range_y = range(num_rows - 1)
     for y in range(num_rows):
         for x in range(row_length):
-            print(f"x={x} y={y}")
+            adjascent = 0
+
+            top_middle = (x, y - 1)
+            top_right = (x + 1, y - 1)
+            centre_right = (x + 1, y)
+            bottom_right = (x + 1, y + 1)
+            bottom_middle = (x, y + 1)
+            bottom_left = (x - 1, x + 1)
+            centre_left = (x - 1, y)
+            top_left = (x - 1, y - 1)
+
+            if (
+                top_middle[0] in range_x
+                and top_middle[1] in range_y
+                and matrix[top_middle[1]][top_middle[0]] == "@"
+            ):
+                adjascent += 1
+                print(f"[x:{x}, y:{y}] - top_middle: {top_middle}: ✅")
+            if (
+                top_right[0] in range_x
+                and top_right[1] in range_y
+                and matrix[top_right[1]][top_right[0]] == "@"
+            ):
+                adjascent += 1
+                print(f"[x:{x}, y:{y}] - top_right: {top_right}: ✅")
+            if (
+                centre_right[0] in range_x
+                and centre_right[1] in range_y
+                and matrix[centre_right[1]][centre_right[0]] == "@"
+            ):
+                adjascent += 1
+                print(f"[x:{x}, y:{y}] - centre_right: {centre_right}: ✅")
+            if (
+                bottom_right[0] in range_x
+                and bottom_right[1] in range_y
+                and matrix[bottom_right[1]][bottom_right[0]] == "@"
+            ):
+                adjascent += 1
+                print(f"[x:{x}, y:{y}] - bottom_right: {bottom_right}: ✅")
+            if (
+                bottom_middle[0] in range_x
+                and bottom_middle[1] in range_y
+                and matrix[bottom_middle[1]][bottom_middle[0]] == "@"
+            ):
+                adjascent += 1
+                print(f"[x:{x}, y:{y}] - bottom_middle: {bottom_middle}: ✅")
+            if (
+                bottom_left[0] in range_x
+                and bottom_left[1] in range_y
+                and matrix[bottom_left[1]][bottom_left[0]] == "@"
+            ):
+                adjascent += 1
+                print(f"[x:{x}, y:{y}] - bottom_left: {bottom_left}: ✅")
+            if (
+                centre_left[0] in range_x
+                and centre_left[1] in range_y
+                and matrix[centre_left[1]][centre_left[0]] == "@"
+            ):
+                adjascent += 1
+                print(f"[x:{x}, y:{y}] - centre_left: {centre_left}: ✅")
+            if (
+                top_left[0] in range_x
+                and top_left[1] in range_y
+                and matrix[top_left[1]][top_left[0]] == "@"
+            ):
+                adjascent += 1
+                print(f"[x:{x}, y:{y}] - top_left: {top_left}: ✅")
+
+            if adjascent < 4:
+                total += 1
 
     return total
 
