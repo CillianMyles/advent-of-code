@@ -27,8 +27,22 @@ def calculate_part_1(filename: str) -> int:
     for row in range(grid.num_rows):
         for col in range(grid.num_cols):
             adjascent = 0
-            point = Point(row, col)
-            print(f"======\n{point}")
+
+            effective_row = row
+            if effective_row == 0:
+                effective_row = 1
+            elif effective_row == grid.num_rows - 1:
+                effective_row = grid.num_rows - 2
+
+            effective_col = col
+            if effective_col == 0:
+                effective_col = 1
+            elif effective_col == grid.num_cols - 1:
+                effective_col = grid.num_cols - 2
+
+            point = Point(effective_row, effective_col)
+            real_point = Point(row, col)
+            print(f"======\n{real_point}")
 
             if grid.value_at(point.top_middle) == "@":
                 adjascent += 1
@@ -57,9 +71,9 @@ def calculate_part_1(filename: str) -> int:
 
             if adjascent < 4:
                 total += 1
-                print(f"{point}: ✅")
+                print(f"{real_point}: ✅")
             else:
-                print(f"{point}: ❌")
+                print(f"{real_point}: ❌")
 
     print(f"======")
     return total
