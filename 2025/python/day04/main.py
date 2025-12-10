@@ -111,6 +111,66 @@ def calculate_part_2(filename: str) -> int:
     return 0
 
 
+class Point:
+    def __init__(self, row: int, column: int):
+        self._row = row
+        self._column = column
+
+    def r(self) -> int:
+        return self._row
+
+    def c(self) -> int:
+        return self._column
+
+    def top_middle(self):
+        return Point(self.r - 1, self.c)
+
+    def top_right(self):
+        return Point(self.r - 1, self.c + 1)
+
+    def centre_right(self):
+        return Point(self.r, self.c + 1)
+
+    def bottom_right(self):
+        return Point(self.r + 1, self.c + 1)
+
+    def bottom_middle(self):
+        return Point(self.r + 1, self.c)
+
+    def bottom_left(self):
+        return Point(self.r + 1, self.c - 1)
+
+    def centre_left(self):
+        return Point(self.r, self.c - 1)
+
+    def top_left(self):
+        return Point(self.r - 1, self.c - 1)
+
+    def __str__(self):
+        return f"Point(row: {self.r}, column: {self.c})"
+
+
+class Grid:
+    def __init__(self, data: List[List[str]]):
+        self._data = data
+        self._num_rows = len(data)
+        self._num_cols: int | None = None
+        for row in data:
+            for column in row:
+                if self._num_cols is None:
+                    self._num_cols = len(column)
+                else:
+                    assert self._num_cols == len(column)
+
+    def in_bounds(self, point: Point) -> bool:
+        return 0 <= point.r < self._num_rows and 0 <= point.c < self._num_cols
+
+    def value_at(self, point: Point) -> str | None:
+        if not self.in_bounds(point):
+            return None
+        return self._data[point.c][point.r]
+
+
 def part_1():
     sample = calculate_part_1("p1-sample.input")
     # puzzle = calculate_part_1("p1-puzzle.input")
