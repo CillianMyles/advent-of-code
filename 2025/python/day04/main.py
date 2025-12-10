@@ -26,56 +26,31 @@ def calculate_part_1(filename: str) -> int:
     grid = Grid(data)
     for row in range(grid.num_rows):
         for col in range(grid.num_cols):
-            adjascent = 0
+            point = Point(row, col)
+            if grid.value_at(point) != "@":
+                continue
 
-            effective_row = row
-            if effective_row == 0:
-                effective_row = 1
-            elif effective_row == grid.num_rows - 1:
-                effective_row = grid.num_rows - 2
-
-            effective_col = col
-            if effective_col == 0:
-                effective_col = 1
-            elif effective_col == grid.num_cols - 1:
-                effective_col = grid.num_cols - 2
-
-            point = Point(effective_row, effective_col)
-            real_point = Point(row, col)
-            print(f"======\n{real_point}")
-
+            adjacent_rolls = 0
             if grid.value_at(point.top_middle) == "@":
-                adjascent += 1
-                print(f"top_middle: {point.top_middle!r}: ☑️")
+                adjacent_rolls += 1
             if grid.value_at(point.top_right) == "@":
-                adjascent += 1
-                print(f"top_right: {point.top_right!r}: ☑️")
+                adjacent_rolls += 1
             if grid.value_at(point.centre_right) == "@":
-                adjascent += 1
-                print(f"centre_right: {point.centre_right!r}: ☑️")
+                adjacent_rolls += 1
             if grid.value_at(point.bottom_right) == "@":
-                adjascent += 1
-                print(f"bottom_right: {point.bottom_right!r}: ☑️")
+                adjacent_rolls += 1
             if grid.value_at(point.bottom_middle) == "@":
-                adjascent += 1
-                print(f"bottom_middle: {point.bottom_middle!r}: ☑️")
+                adjacent_rolls += 1
             if grid.value_at(point.bottom_left) == "@":
-                adjascent += 1
-                print(f"bottom_left: {point.bottom_left!r}: ☑️")
+                adjacent_rolls += 1
             if grid.value_at(point.centre_left) == "@":
-                adjascent += 1
-                print(f"centre_left: {point.centre_left!r}: ☑️")
+                adjacent_rolls += 1
             if grid.value_at(point.top_left) == "@":
-                adjascent += 1
-                print(f"top_left: {point.top_left!r}: ☑️")
+                adjacent_rolls += 1
 
-            if adjascent < 4:
+            if adjacent_rolls < 4:
                 total += 1
-                print(f"{real_point}: ✅")
-            else:
-                print(f"{real_point}: ❌")
 
-    print(f"======")
     return total
 
 
@@ -148,26 +123,26 @@ class Grid:
     def value_at(self, point: Point) -> str | None:
         if not self.in_bounds(point):
             return None
-        return self._data[point.col][point.row]
+        return self._data[point.row][point.col]
 
 
 def part_1():
     sample = calculate_part_1("p1-sample.input")
-    # puzzle = calculate_part_1("p1-puzzle.input")
     print("Part 1 - Sample:", sample)
-    # print("Part 1 - Puzzle:", puzzle)
+    puzzle = calculate_part_1("p1-puzzle.input")
+    print("Part 1 - Puzzle:", puzzle)
 
 
 def part_2():
     sample = calculate_part_2("p1-sample.input")
-    puzzle = calculate_part_2("p1-puzzle.input")
     print("Part 2 - Sample:", sample)
+    puzzle = calculate_part_2("p1-puzzle.input")
     print("Part 2 - Puzzle:", puzzle)
 
 
 def main():
     part_1()
-    # part_2()
+    part_2()
 
 
 if __name__ == "__main__":
