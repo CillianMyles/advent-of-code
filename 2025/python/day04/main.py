@@ -28,7 +28,7 @@ def calculate_part_1(filename: str) -> int:
         for col in range(grid.num_cols):
             adjascent = 0
             point = Point(row, col)
-            print(f"======\n{point!r}")
+            print(f"======\n{point}")
 
             if grid.value_at(point.top_middle) == "@":
                 adjascent += 1
@@ -57,9 +57,9 @@ def calculate_part_1(filename: str) -> int:
 
             if adjascent < 4:
                 total += 1
-                print(f"{point!r}: ✅")
+                print(f"{point}: ✅")
             else:
-                print(f"{point!r}: ❌")
+                print(f"{point}: ❌")
 
     print(f"======")
     return total
