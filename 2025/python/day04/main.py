@@ -7,15 +7,28 @@ _directory = Path(__file__).parent
 
 def _read_lines(filename: str) -> Iterable[str]:
     filepath = _directory / filename
-    with open(filepath, "r", encoding="utf-8") as f:
-        for line in f:
+    with open(filepath, "r", encoding="utf-8") as file:
+        for line in file:
             line = line.strip()
             if not line:
                 continue
             yield line
 
 
-def _calculate_removable_rolls(data: List[List[str]]) -> int:
+def _read_data(filename: str) -> List[List[str]]:
+    data: List[List[str]] = []
+
+    for line in _read_lines(filename):
+        row = list(line)
+        data.append(row)
+
+    return data
+
+
+def _calculate_removable_rolls(
+    data: List[List[str]],
+    reset_value: str | None = None,
+) -> int:
     total = 0
 
     grid = Grid(data)
@@ -45,21 +58,27 @@ def _calculate_removable_rolls(data: List[List[str]]) -> int:
 
             if adjacent_rolls < 4:
                 total += 1
+                if reset_value:
+                    data[point.row][point.col] = "."
 
     return total
 
 
 def calculate_part_1(filename: str) -> int:
-    data: List[List[str]] = []
-    for line in _read_lines(filename):
-        row = list(line)
-        data.append(row)
-
+    data = _read_data(filename)
     return _calculate_removable_rolls(data)
 
 
 def calculate_part_2(filename: str) -> int:
-    return 0
+    data = _read_data(filename)
+    removed = 0
+    while True:
+        removable = _calculate_removable_rolls(data, reset_value=".")
+        if removable:
+            removed += removable
+        else:
+            break
+    return removed
 
 
 class Point:
