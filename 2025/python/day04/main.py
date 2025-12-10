@@ -15,13 +15,8 @@ def _read_lines(filename: str) -> Iterable[str]:
             yield line
 
 
-def calculate_part_1(filename: str) -> int:
+def _calculate_removable_rolls(data: List[List[str]]) -> int:
     total = 0
-
-    data: List[List[str]] = []
-    for line in _read_lines(filename):
-        row = list(line)
-        data.append(row)
 
     grid = Grid(data)
     for row in range(grid.num_rows):
@@ -52,6 +47,15 @@ def calculate_part_1(filename: str) -> int:
                 total += 1
 
     return total
+
+
+def calculate_part_1(filename: str) -> int:
+    data: List[List[str]] = []
+    for line in _read_lines(filename):
+        row = list(line)
+        data.append(row)
+
+    return _calculate_removable_rolls(data)
 
 
 def calculate_part_2(filename: str) -> int:
