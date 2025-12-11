@@ -8,7 +8,7 @@ _directory = Path(__file__).parent
 def _read_data(filename: str) -> Tuple[Set[int], List[int]]:
     filepath = _directory / filename
 
-    valid_ids: List[Tuple[str,str]] = []
+    valid_ids: List[Tuple[str, str]] = []
     available_ids: List[str] = []
 
     with open(filepath, "r", encoding="utf-8") as file:
@@ -45,7 +45,7 @@ def calculate_part_1(filename: str) -> int:
     valid_ids, available_ids = _read_data(filename)
     for id in available_ids:
         for valid in valid_ids:
-            if id >= valid[0] and id <= valid [1]:
+            if id >= valid[0] and id <= valid[1]:
                 total += 1
                 break
     print(f"Valid: {valid}")
