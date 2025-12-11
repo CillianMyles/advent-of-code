@@ -8,7 +8,7 @@ _directory = Path(__file__).parent
 def _read_data(filename: str) -> Tuple[Set[int], List[int]]:
     filepath = _directory / filename
 
-    valid_ids: Set[str] = set()
+    valid_ids: List[Tuple[str,str]] = []
     available_ids: List[str] = []
 
     with open(filepath, "r", encoding="utf-8") as file:
@@ -28,10 +28,9 @@ def _read_data(filename: str) -> Tuple[Set[int], List[int]]:
                 id_range_bounds = line.split("-")
                 lower = int(id_range_bounds[0])
                 upper = int(id_range_bounds[1])
-                id_range = range(lower, upper + 1)
+                id_range = (lower, upper)
                 print(f"Valid: {id_range}")
-                for id in id_range:
-                    valid_ids.add(id)
+                valid_ids.append(id_range)
             else:
                 value = int(line)
                 print(f"Available: {value}")
@@ -43,12 +42,14 @@ def _read_data(filename: str) -> Tuple[Set[int], List[int]]:
 
 def calculate_part_1(filename: str) -> int:
     total = 0
-    valid, available = _read_data(filename)
-    for id in available:
-        if id in valid:
-            total += 1
+    valid_ids, available_ids = _read_data(filename)
+    for id in available_ids:
+        for valid in valid_ids:
+            if id >= valid[0] and id <= valid [1]:
+                total += 1
+                break
     print(f"Valid: {valid}")
-    print(f"Available: {available}")
+    print(f"Available: {available_ids}")
     print(f"Total: {total}")
     return total
 
