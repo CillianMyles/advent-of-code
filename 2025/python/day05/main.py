@@ -55,7 +55,12 @@ def calculate_part_1(filename: str) -> int:
 
 
 def calculate_part_2(filename: str) -> int:
-    return 0
+    total = 0
+    valid_ids, _ = _read_data(filename)
+    for valid in valid_ids:
+        id_range = range(valid[0], valid[1])
+        print(f"range: {id_range}")
+    return total
 
 
 def part_1():
