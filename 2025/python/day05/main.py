@@ -12,7 +12,7 @@ def _read_data(filename: str) -> Tuple[Set[int], List[int]]:
     available_ids: List[str] = []
 
     with open(filepath, "r", encoding="utf-8") as file:
-        print("=== START ===")
+        # print("=== START ===")
 
         all_valid_read = False
 
@@ -20,7 +20,7 @@ def _read_data(filename: str) -> Tuple[Set[int], List[int]]:
             line = line.strip()
 
             if not all_valid_read and not line:
-                print("=== GAP ===")
+                # print("=== GAP ===")
                 all_valid_read = True
                 continue
 
@@ -29,14 +29,14 @@ def _read_data(filename: str) -> Tuple[Set[int], List[int]]:
                 lower = int(id_range_bounds[0])
                 upper = int(id_range_bounds[1])
                 id_range = (lower, upper)
-                print(f"Valid: {id_range}")
+                # print(f"Valid: {id_range}")
                 valid_ids.append(id_range)
             else:
                 value = int(line)
-                print(f"Available: {value}")
+                # print(f"Available: {value}")
                 available_ids.append(value)
 
-        print("=== EOF ===")
+        # print("=== EOF ===")
     return valid_ids, available_ids
 
 
@@ -48,9 +48,9 @@ def calculate_part_1(filename: str) -> int:
             if id >= valid[0] and id <= valid[1]:
                 total += 1
                 break
-    print(f"Valid: {valid}")
-    print(f"Available: {available_ids}")
-    print(f"Total: {total}")
+    # print(f"Valid: {valid}")
+    # print(f"Available: {available_ids}")
+    # print(f"Total: {total}")
     return total
 
 
