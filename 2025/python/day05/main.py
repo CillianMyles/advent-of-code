@@ -62,15 +62,17 @@ def calculate_part_2(filename: str) -> int:
 
     edited_ids = []
     for i in range(len(sorted_ids)):
-        curr_start = sorted_ids[i][0]
-        curr_end = sorted_ids[i][1]
+        curr = sorted_ids[i]
+        curr_start = curr[0]
+        curr_end = curr[1]
         curr_range = (curr_start, curr_end)
 
         if i == 0:
             edited_ids.append(curr_range)
             continue
 
-        prev_end = sorted_ids[i - 1][1]
+        prev = sorted_ids[i - 1]
+        prev_end = prev[1]
 
         if prev_end >= curr_start:
             curr_range = (prev_end + 1, curr_end)
