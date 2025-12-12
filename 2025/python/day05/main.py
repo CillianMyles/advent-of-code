@@ -56,11 +56,11 @@ def calculate_part_1(filename: str) -> int:
 
 def calculate_part_2(filename: str) -> int:
     total = 0
+
     valid_ids, _ = _read_data(filename)
-
     sorted_ids = sorted(valid_ids)
-
     edited_ids = []
+
     for i in range(len(sorted_ids)):
         curr = sorted_ids[i]
         curr_start = curr[0]
