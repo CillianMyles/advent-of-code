@@ -57,9 +57,29 @@ def calculate_part_1(filename: str) -> int:
 def calculate_part_2(filename: str) -> int:
     total = 0
     valid_ids, _ = _read_data(filename)
-    for valid in valid_ids:
-        id_range = range(valid[0], valid[1])
-        print(f"range: {id_range}")
+
+    sorted_ids = sorted(valid_ids)
+
+    edited_ids = []
+    for i in range(len(sorted_ids)):
+        curr_start = sorted_ids[i][0]
+        curr_end = sorted_ids[i][1]
+        curr_range = (curr_start, curr_end)
+
+        if i == 0:
+            edited_ids.append(curr_range)
+            continue
+
+        prev_end = sorted_ids[i - 1][1]
+
+        if prev_end >= curr_start:
+            curr_range = (prev_end + 1, curr_end)
+
+        edited_ids.append(curr_range)
+
+    for id_range in edited_ids:
+        total += id_range[1] - id_range[0] + 1
+
     return total
 
 
