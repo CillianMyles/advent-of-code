@@ -22,11 +22,11 @@ def _read_data(filename: str) -> Tuple[List[Tuple[int, int]], List[int]]:
                 continue
 
             if not all_valid_read:
-                id_range_bounds = line.split("-")
-                lower = int(id_range_bounds[0])
-                upper = int(id_range_bounds[1])
-                id_range = (lower, upper)
-                valid_ids.append(id_range)
+                bounds = line.split("-")
+                lower = int(bounds[0])
+                upper = int(bounds[1])
+                valid_ids.append((lower, upper))
+
             else:
                 value = int(line)
                 available_ids.append(value)
@@ -37,15 +37,18 @@ def _read_data(filename: str) -> Tuple[List[Tuple[int, int]], List[int]]:
 def calculate_part_1(filename: str) -> int:
     total = 0
     valid_ids, available_ids = _read_data(filename)
+
     for id in available_ids:
-        for valid in valid_ids:
-            if id >= valid[0] and id <= valid[1]:
+        for start, end in valid_ids:
+            if start <= id <= end:
                 total += 1
                 break
+
     return total
 
 
 def calculate_part_2(filename: str) -> int:
+    total = 0
     valid_ids, _ = _read_data(filename)
     merged_ranges: List[Tuple[int, int]] = []
 
@@ -61,7 +64,10 @@ def calculate_part_2(filename: str) -> int:
         else:
             merged_ranges.append((curr_start, curr_end))
 
-    return sum(end - start + 1 for start, end in merged_ranges)
+    for start, end in merged_ranges:
+        total += end - start + 1
+
+    return total
 
 
 def part_1():
