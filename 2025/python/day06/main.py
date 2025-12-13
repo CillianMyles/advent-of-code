@@ -1,4 +1,4 @@
-import math
+from math import prod
 from pathlib import Path
 from typing import Iterator, List
 
@@ -42,7 +42,7 @@ def calculate_part_1(filename: str) -> int:
         if sign == "+":
             total += sum(values)
         elif sign == "*":
-            total += math.prod(values)
+            total += prod(values)
         else:
             raise ValueError(f"unexpected sign: {sign}")
 
