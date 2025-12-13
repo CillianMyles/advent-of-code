@@ -1,11 +1,11 @@
 from pathlib import Path
-from typing import Iterable, Tuple
+from typing import Iterator, Tuple
 
 
 _directory = Path(__file__).parent
 
 
-def read_instructions(filename: str) -> Iterable[Tuple[str, int]]:
+def read_instructions(filename: str) -> Iterator[Tuple[str, int]]:
     path = _directory / filename
     with path.open("r", encoding="utf-8") as f:
         for line in f:

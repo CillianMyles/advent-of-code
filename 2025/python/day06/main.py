@@ -1,12 +1,52 @@
+import math
 from pathlib import Path
-from typing import List, Tuple
+from typing import Iterator, List
 
 
 _directory = Path(__file__).parent
 
 
+def _read_lines(filename: str) -> Iterator[str]:
+    filepath = _directory / filename
+    with open(filepath, "r", encoding="utf-8") as file:
+        for line in file:
+            line = line.strip()
+            if not line:
+                continue
+            yield line
+
+
 def calculate_part_1(filename: str) -> int:
-    return 0
+    total = 0
+    data: List[List[str]] = []
+    num_parts: int | None = None
+
+    for line in _read_lines(filename):
+        parts = line.split()
+
+        if num_parts is None:
+            num_parts = len(parts)
+            for i in range(num_parts):
+                empty: List[str] = []
+                data.insert(i, empty)
+        else:
+            assert num_parts == len(parts), "unexpected parts length"
+
+        for i, part in enumerate(parts):
+            data[i].append(part)
+
+    for row in data:
+        sign = row[len(row) - 1]
+        values = [int(value) for value in row[:-1]]
+        # print(f"{sign} - {values}")
+        if sign == "+":
+            total += sum(values)
+        elif sign == "*":
+            total += math.prod(values)
+        else:
+            raise ValueError(f"unexpected sign: {sign}")
+
+    return total
 
 
 def calculate_part_2(filename: str) -> int:

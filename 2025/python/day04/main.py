@@ -1,11 +1,11 @@
 from pathlib import Path
-from typing import Iterable, List
+from typing import Iterator, List
 
 
 _directory = Path(__file__).parent
 
 
-def _read_lines(filename: str) -> Iterable[str]:
+def _read_lines(filename: str) -> Iterator[str]:
     filepath = _directory / filename
     with open(filepath, "r", encoding="utf-8") as file:
         for line in file:

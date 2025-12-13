@@ -1,11 +1,11 @@
 from pathlib import Path
-from typing import List, Any, Tuple, Iterable
+from typing import List, Any, Tuple, Iterator
 
 
 _directory = Path(__file__).parent
 
 
-def _load_ids(filename: str) -> Iterable[Tuple[int, int]]:
+def _load_ids(filename: str) -> Iterator[Tuple[int, int]]:
     filepath = _directory / filename
     with open(filepath, "r", encoding="utf-8") as f:
         for line in f:
