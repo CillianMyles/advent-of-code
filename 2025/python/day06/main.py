@@ -1,6 +1,6 @@
 from math import prod
 from pathlib import Path
-from typing import Iterator, List
+from typing import Iterator, List, Tuple
 
 
 _directory = Path(__file__).parent
@@ -35,8 +35,8 @@ def calculate_part_1(filename: str) -> int:
             data[i].append(part)
 
     for row in data:
-        sign = row[len(row) - 1]
-        values = [int(value) for value in row[:-1]]
+        sign = row.pop(-1)
+        values = [int(v) for v in row]
         if sign == "+":
             total += sum(values)
         elif sign == "*":
@@ -48,7 +48,17 @@ def calculate_part_1(filename: str) -> int:
 
 
 def calculate_part_2(filename: str) -> int:
-    return 0
+    total = 0
+
+    lines = [line for line in _read_lines(filename)]
+
+    signs: List[Tuple[int, str]] = []
+    last = lines.pop(-1)
+    for i, char in enumerate(last):
+        if char != " ":
+            signs.append((i, char))
+
+    return total
 
 
 def part_1():
