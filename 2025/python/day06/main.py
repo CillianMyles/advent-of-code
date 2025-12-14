@@ -27,8 +27,7 @@ def calculate_part_1(filename: str) -> int:
         if num_parts is None:
             num_parts = len(parts)
             for i in range(num_parts):
-                empty: List[str] = []
-                data.insert(i, empty)
+                data.insert(i, [])
         else:
             assert num_parts == len(parts), "unexpected parts length"
 
@@ -38,7 +37,6 @@ def calculate_part_1(filename: str) -> int:
     for row in data:
         sign = row[len(row) - 1]
         values = [int(value) for value in row[:-1]]
-        # print(f"{sign} - {values}")
         if sign == "+":
             total += sum(values)
         elif sign == "*":
