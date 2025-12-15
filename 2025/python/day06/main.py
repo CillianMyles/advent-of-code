@@ -58,6 +58,23 @@ def calculate_part_2(filename: str) -> int:
         if char != " ":
             signs.append((i, char))
 
+    width = len(last)
+    for i, (start, sign) in enumerate(signs):
+        if i == len(signs) - 1:
+            end = width - 1
+        else:
+            end = signs[i + 1][0] - 1
+        rows: List[List[str]] = [[] for _ in range(end, start - 1, -1)]
+        print(f"== i: {i} start: {start} - end: {end} - rows: {rows} ==")
+        for j in range(end, start - 1, -1):
+            for k in range(len(lines)):
+                line = lines[k]
+                val = line[j]
+                if val != " ":
+                    print(f"block: {i} - y: {k} -  x: {j} - val: {val}")
+                    # rows[j].append(val)
+        # print(rows)
+
     return total
 
 
@@ -71,12 +88,12 @@ def part_1():
 def part_2():
     sample = calculate_part_2("p1-sample.input")
     print("Part 2 - Sample:", sample)
-    puzzle = calculate_part_2("p1-puzzle.input")
-    print("Part 2 - Puzzle:", puzzle)
+    # puzzle = calculate_part_2("p1-puzzle.input")
+    # print("Part 2 - Puzzle:", puzzle)
 
 
 def main():
-    part_1()
+    # part_1()
     part_2()
 
 
