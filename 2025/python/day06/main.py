@@ -52,11 +52,10 @@ def part_2(filename: str) -> int:
 
     lines = [line for line in _read_lines(filename)]
 
-    signs: List[Tuple[int, str]] = []
     last = lines.pop(-1)
-    for i, char in enumerate(last):
-        if char != " ":
-            signs.append((i, char))
+    signs: List[Tuple[int, str]] = [
+        (i, char) for i, char in enumerate(last) if char != " "
+    ]
 
     width = len(last)
     for i in range(len(signs) - 1, -1, -1):
@@ -65,9 +64,10 @@ def part_2(filename: str) -> int:
             end = width - 1
         else:
             end = signs[i + 1][0] - 1
+
+        idx = 0
         length = end - start + 1
         rows: List[str] = ["" for _ in range(length)]
-        idx = 0
         for j in range(end, start - 1, -1):
             for k in range(len(lines)):
                 line = lines[k]
@@ -76,10 +76,7 @@ def part_2(filename: str) -> int:
                     rows[idx] += val
             idx += 1
 
-        values = []
-        for row in rows:
-            if row:
-                values.append(int(row))
+        values = [int(r) for r in rows if r]
         if sign == "+":
             total += sum(values)
         elif sign == "*":
