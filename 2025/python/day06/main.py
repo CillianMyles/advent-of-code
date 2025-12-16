@@ -65,7 +65,8 @@ def part_2(filename: str) -> int:
             end = width - 1
         else:
             end = signs[i + 1][0] - 1
-        rows: List[List[str]] = [[] for _ in range(end, start - 1, -1)]
+        length = end - start + 1
+        rows: List[str] = ["" for _ in range(length)]
         print(f"=== block: {i} start: {start} - end: {end} - rows: {rows} ===")
         idx = 0
         for j in range(end, start - 1, -1):
@@ -74,9 +75,21 @@ def part_2(filename: str) -> int:
                 val = line[j]
                 print(f"j: {j} - k: {k} - line: {line} - val: {val}")
                 if val != " ":
-                    rows[idx].append(val)
+                    rows[idx] += val
             idx += 1
         print(rows)
+
+        values = []
+        for row in rows:
+            if row:
+                values.append(int(row))
+        print(values)
+        if sign == "+":
+            total += sum(values)
+        elif sign == "*":
+            total += prod(values)
+        else:
+            raise ValueError(f"unexpected sign: {sign}")
 
     return total
 
