@@ -67,23 +67,19 @@ def part_2(filename: str) -> int:
             end = signs[i + 1][0] - 1
         length = end - start + 1
         rows: List[str] = ["" for _ in range(length)]
-        print(f"=== block: {i} start: {start} - end: {end} - rows: {rows} ===")
         idx = 0
         for j in range(end, start - 1, -1):
             for k in range(len(lines)):
                 line = lines[k]
                 val = line[j]
-                print(f"j: {j} - k: {k} - line: {line} - val: {val}")
                 if val != " ":
                     rows[idx] += val
             idx += 1
-        print(rows)
 
         values = []
         for row in rows:
             if row:
                 values.append(int(row))
-        print(values)
         if sign == "+":
             total += sum(values)
         elif sign == "*":
@@ -102,8 +98,8 @@ def main():
 
     sample_2 = part_2("p1-sample.input")
     print(f"Part 2 - Sample: {sample_2}")
-    # puzzle_2 = part_2("p1-puzzle.input")
-    # print(f"Part 2 - Puzzle: {puzzle_2}")
+    puzzle_2 = part_2("p1-puzzle.input")
+    print(f"Part 2 - Puzzle: {puzzle_2}")
 
 
 if __name__ == "__main__":
