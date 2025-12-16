@@ -16,7 +16,7 @@ def test_part_1_puzzle_input():
 def test_part_2_sample_input():
     input = "p1-sample.input"
     result = part_2(input)
-    assert result == -1
+    assert result == 3263827
 
 
 def test_part_2_puzzle_input():

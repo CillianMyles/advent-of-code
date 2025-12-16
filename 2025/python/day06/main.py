@@ -59,20 +59,23 @@ def part_2(filename: str) -> int:
             signs.append((i, char))
 
     width = len(last)
-    for i, (start, sign) in enumerate(signs):
+    for i in range(len(signs) - 1, -1, -1):
+        start, sign = signs[i]
         if i == len(signs) - 1:
             end = width - 1
         else:
             end = signs[i + 1][0] - 1
-        rows: List[List[str]] = [[] for _ in range(end - 1, start - 1, -1)]
+        rows: List[List[str]] = [[] for _ in range(end, start - 1, -1)]
         print(f"=== block: {i} start: {start} - end: {end} - rows: {rows} ===")
-        for j in range(end - 1, start - 1, -1):
+        idx = 0
+        for j in range(end, start - 1, -1):
             for k in range(len(lines)):
                 line = lines[k]
                 val = line[j]
                 print(f"j: {j} - k: {k} - line: {line} - val: {val}")
                 if val != " ":
-                    rows[j].append(val)
+                    rows[idx].append(val)
+            idx += 1
         print(rows)
 
     return total
