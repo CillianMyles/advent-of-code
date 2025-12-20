@@ -62,19 +62,30 @@ def part_1(filename: str) -> int:
 
 
 def part_2(filename: str) -> int:
-    grid = [list(line) for line in _read_lines(filename)]
     total = 0
-    left = _count_splits(
-        grid.copy(),
+    grid = [list(line) for line in _read_lines(filename)]
+    left = grid.copy()
+    right = grid.copy()
+
+    left_splits = _count_splits(
+        left,
         lambda g, row, col: _split_left(g, row, col),
     )
-    total += left
-    right = _count_splits(
-        grid.copy(),
+    total += left_splits
+
+    right_splits = _count_splits(
+        right,
         lambda g, row, col: _split_right(g, row, col),
     )
-    total += right
-    print(f"left: {left} - right - {right}")
+    total += right_splits
+
+    for i, l in enumerate(left):
+        print(f"[{i}] {l}")
+
+    for i, r in enumerate(right):
+        print(f"[{i}] {r}")
+
+    print(f"left: {left_splits} - right - {right_splits}")
     return total
 
 
@@ -86,8 +97,8 @@ def main() -> None:
 
     sample_2 = part_2("p1-sample.input")
     print(f"Part 2 - Sample: {sample_2}")
-    puzzle_2 = part_2("p1-puzzle.input")
-    print(f"Part 2 - Puzzle: {puzzle_2}")
+    # puzzle_2 = part_2("p1-puzzle.input")
+    # print(f"Part 2 - Puzzle: {puzzle_2}")
 
 
 if __name__ == "__main__":
