@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import copy
+from copy import deepcopy
 from pathlib import Path
 from typing import Callable, Iterator, List
 
@@ -65,8 +65,8 @@ def part_1(filename: str) -> int:
 def part_2(filename: str) -> int:
     total = 0
     grid = [list(line) for line in _read_lines(filename)]
-    left = copy.deepcopy(grid)
-    right = copy.deepcopy(grid)
+    left = deepcopy(grid)
+    right = deepcopy(grid)
 
     left_splits = _count_splits(
         left,
