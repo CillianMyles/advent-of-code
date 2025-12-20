@@ -18,34 +18,24 @@ def _read_lines(filename: str) -> Iterator[str]:
 
 def part_1(filename: str) -> int:
     splits = 0
-    start: int | None = None
     grid = [list(line) for line in _read_lines(filename)]
 
     for i in range(len(grid)):
         curr = grid[i]
-
         if i == 0:
-            start = curr.index("S")
             continue
-
-        if i == 1:
-            if curr[start] == ".":
-                grid[i][start] = "|"
-                continue
-            else:
-                raise Exception("expected (.) below (S)")
-
         prev = grid[i - 1]
-        beams = [i for i, v in enumerate(prev) if v == "|"]
-        markers = [i for i, v in enumerate(curr) if v == "^"]
 
-        for beam in beams:
-            if beam not in markers:
-                grid[i][beam] = "|"
+        targets = [i for i, v in enumerate(prev) if v == "|" or v == "S"]
+        splitters = [i for i, v in enumerate(curr) if v == "^"]
+
+        for target in targets:
+            if target not in splitters:
+                grid[i][target] = "|"
             else:
                 splits += 1
-                grid[i][beam - 1] = "|"
-                grid[i][beam + 1] = "|"
+                grid[i][target - 1] = "|"
+                grid[i][target + 1] = "|"
 
     return splits
 
