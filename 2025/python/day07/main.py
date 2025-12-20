@@ -26,7 +26,6 @@ def part_1(filename: str) -> int:
 
         if i == 0:
             start = curr.index("S")
-            print(f'[0] "S" found at {start}')
             continue
 
         if i == 1:
@@ -39,7 +38,6 @@ def part_1(filename: str) -> int:
         prev = grid[i - 1]
         beams = [i for i, v in enumerate(prev) if v == "|"]
         markers = [i for i, v in enumerate(curr) if v == "^"]
-        # print(f"[{i}] - beams (|): {beams} - markers (^): {markers}")
 
         for beam in beams:
             if beam not in markers:
@@ -48,9 +46,6 @@ def part_1(filename: str) -> int:
                 splits += 1
                 grid[i][beam - 1] = "|"
                 grid[i][beam + 1] = "|"
-
-    for j, line in enumerate(grid):
-        print(f"[{j}] {line}")
 
     return splits
 
