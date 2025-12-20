@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 from pathlib import Path
 from typing import Callable, Iterator, List
 
@@ -64,36 +65,37 @@ def part_1(filename: str) -> int:
 def part_2(filename: str) -> int:
     total = 0
     grid = [list(line) for line in _read_lines(filename)]
-    left = grid.copy()
-    right = grid.copy()
+    left = copy.deepcopy(grid)
+    right = copy.deepcopy(grid)
 
     left_splits = _count_splits(
         left,
-        lambda g, row, col: _split_left(g, row, col),
+        lambda grid, row, col: _split_left(grid, row, col),
     )
     total += left_splits
 
-    right_splits = _count_splits(
-        right,
-        lambda g, row, col: _split_right(g, row, col),
-    )
-    total += right_splits
-
+    print(f"left: {left_splits}")
     for i, l in enumerate(left):
         print(f"[{i}] {l}")
 
+    right_splits = _count_splits(
+        right,
+        lambda grid, row, col: _split_right(grid, row, col),
+    )
+    total += right_splits
+
+    print(f"right - {right_splits}")
     for i, r in enumerate(right):
         print(f"[{i}] {r}")
 
-    print(f"left: {left_splits} - right - {right_splits}")
     return total
 
 
 def main() -> None:
-    sample_1 = part_1("p1-sample.input")
-    print(f"Part 1 - Sample: {sample_1}")
-    puzzle_1 = part_1("p1-puzzle.input")
-    print(f"Part 1 - Puzzle: {puzzle_1}")
+    # sample_1 = part_1("p1-sample.input")
+    # print(f"Part 1 - Sample: {sample_1}")
+    # puzzle_1 = part_1("p1-puzzle.input")
+    # print(f"Part 1 - Puzzle: {puzzle_1}")
 
     sample_2 = part_2("p1-sample.input")
     print(f"Part 2 - Sample: {sample_2}")
