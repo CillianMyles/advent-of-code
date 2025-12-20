@@ -5,6 +5,7 @@ from typing import Callable, Iterator, List
 
 _directory = Path(__file__).parent
 
+
 SplitHandler = Callable[[List[List[str]], int, int], None]
 
 
@@ -17,16 +18,16 @@ def _read_lines(filename: str) -> Iterator[str]:
                 yield line
 
 
-def _fan_out_split(grid: List[List[str]], row: int, col: int) -> None:
+def _fan_out(grid: List[List[str]], row: int, col: int) -> None:
     grid[row][col - 1] = "|"
     grid[row][col + 1] = "|"
 
 
-def _fan_left_split(grid: List[List[str]], row: int, col: int) -> None:
+def _split_left(grid: List[List[str]], row: int, col: int) -> None:
     grid[row][col - 1] = "|"
 
 
-def _fan_right_split(grid: List[List[str]], row: int, col: int) -> None:
+def _split_right(grid: List[List[str]], row: int, col: int) -> None:
     grid[row][col + 1] = "|"
 
 
@@ -56,17 +57,25 @@ def part_1(filename: str) -> int:
     grid = [list(line) for line in _read_lines(filename)]
     return _count_splits(
         grid,
-        lambda g, row, col: _fan_out_split(g, row, col),
+        lambda g, row, col: _fan_out(g, row, col),
     )
 
 
 def part_2(filename: str) -> int:
     grid = [list(line) for line in _read_lines(filename)]
+    total = 0
     left = _count_splits(
-        grid,
-        lambda g, row, col: _fan_left_split(g, row, col),
+        grid.copy(),
+        lambda g, row, col: _split_left(g, row, col),
     )
-    return left
+    total += left
+    right = _count_splits(
+        grid.copy(),
+        lambda g, row, col: _split_right(g, row, col),
+    )
+    total += right
+    print(f"left: {left} - right - {right}")
+    return total
 
 
 def main() -> None:
