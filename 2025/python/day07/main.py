@@ -17,10 +17,9 @@ def _read_lines(filename: str) -> Iterator[str]:
 
 
 def part_1(filename: str) -> int:
-    grid = [list(line) for line in _read_lines(filename)]
-
+    splits = 0
     start: int | None = None
-    beams = [[] for _ in grid]
+    grid = [list(line) for line in _read_lines(filename)]
 
     for i in range(len(grid)):
         curr = grid[i]
@@ -38,23 +37,22 @@ def part_1(filename: str) -> int:
                 raise Exception("expected (.) below (S)")
 
         prev = grid[i - 1]
-        markers = [i for i, v in enumerate(curr) if v == "^"]
         beams = [i for i, v in enumerate(prev) if v == "|"]
-        print(f"[{i}] - beams (|): {beams} - markers (^): {markers}")
+        markers = [i for i, v in enumerate(curr) if v == "^"]
+        # print(f"[{i}] - beams (|): {beams} - markers (^): {markers}")
 
-        # if i == len(grid) - 1:
-        #     print("TODO")
-        #     continue
+        for beam in beams:
+            if beam not in markers:
+                grid[i][beam] = "|"
+            else:
+                splits += 1
+                grid[i][beam - 1] = "|"
+                grid[i][beam + 1] = "|"
 
-        # next = grid[i+1]
+    for j, line in enumerate(grid):
+        print(f"[{j}] {line}")
 
-        # target = 'S' if i == 1 else '|'
-
-        # chars = list(line)
-        # grid.insert(i, chars)
-        # print(f"[{i}] chars: {chars}")
-    # print(grid)
-    return 0
+    return splits
 
 
 def part_2(filename: str) -> int:
