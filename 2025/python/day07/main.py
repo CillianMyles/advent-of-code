@@ -1,10 +1,11 @@
 from __future__ import annotations
 
-from math import prod
 from pathlib import Path
-from typing import Iterable, Iterator, List
+from typing import Callable, Iterator, List
 
 _directory = Path(__file__).parent
+
+SplitHandler = Callable[[List[List[str]], int, int], None]
 
 
 def _read_lines(filename: str) -> Iterator[str]:
@@ -16,9 +17,21 @@ def _read_lines(filename: str) -> Iterator[str]:
                 yield line
 
 
-def part_1(filename: str) -> int:
+def _fan_out_split(grid: List[List[str]], row: int, col: int) -> None:
+    grid[row][col - 1] = "|"
+    grid[row][col + 1] = "|"
+
+
+def _fan_left_split(grid: List[List[str]], row: int, col: int) -> None:
+    grid[row][col - 1] = "|"
+
+
+def _fan_right_split(grid: List[List[str]], row: int, col: int) -> None:
+    grid[row][col + 1] = "|"
+
+
+def _count_splits(grid: List[List[str]], on_split: SplitHandler) -> int:
     splits = 0
-    grid = [list(line) for line in _read_lines(filename)]
 
     for i in range(len(grid)):
         curr = grid[i]
@@ -34,14 +47,26 @@ def part_1(filename: str) -> int:
                 grid[i][target] = "|"
             else:
                 splits += 1
-                grid[i][target - 1] = "|"
-                grid[i][target + 1] = "|"
+                on_split(grid, i, target)
 
     return splits
 
 
+def part_1(filename: str) -> int:
+    grid = [list(line) for line in _read_lines(filename)]
+    return _count_splits(
+        grid,
+        lambda g, row, col: _fan_out_split(g, row, col),
+    )
+
+
 def part_2(filename: str) -> int:
-    return 0
+    grid = [list(line) for line in _read_lines(filename)]
+    left = _count_splits(
+        grid,
+        lambda g, row, col: _fan_left_split(g, row, col),
+    )
+    return left
 
 
 def main() -> None:
