@@ -48,6 +48,20 @@ def part_1(filename: str) -> int:
         print(distance)
 
     print("=" * 50)
+    connections: List[List[int]] = []
+    for _, i, j in distances:
+        for k in range(len(connections)):
+            if i in line and j in line:
+                break
+            elif i in line:
+                connections[k].append(j)
+                break
+            elif j in line:
+                connections[k].append(i)
+                break
+    for connection in connections:
+        print(connection)
+
     return 0
 
 
