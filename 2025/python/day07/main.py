@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from copy import deepcopy
 from pathlib import Path
 from typing import Callable, Iterator, List
 
@@ -21,14 +20,6 @@ def _read_lines(filename: str) -> Iterator[str]:
 
 def _fan_out(grid: List[List[str]], row: int, col: int) -> None:
     grid[row][col - 1] = "|"
-    grid[row][col + 1] = "|"
-
-
-def _split_left(grid: List[List[str]], row: int, col: int) -> None:
-    grid[row][col - 1] = "|"
-
-
-def _split_right(grid: List[List[str]], row: int, col: int) -> None:
     grid[row][col + 1] = "|"
 
 
@@ -63,44 +54,52 @@ def part_1(filename: str) -> int:
 
 
 def part_2(filename: str) -> int:
-    total = 0
     grid = [list(line) for line in _read_lines(filename)]
-    left = deepcopy(grid)
-    right = deepcopy(grid)
+    height = len(grid)
+    width = len(grid[0]) if grid else 0
 
-    left_splits = _count_splits(
-        left,
-        lambda grid, row, col: _split_left(grid, row, col),
-    )
-    total += left_splits
+    start_col = next(i for i, v in enumerate(grid[0]) if v == "S")
+    active = [0 for _ in range(width)]
+    active[start_col] = 1
+    exited = 0
 
-    print(f"left: {left_splits}")
-    for i, l in enumerate(left):
-        print(f"[{i}] {l}")
+    for row in range(1, height):
+        next_active = [0 for _ in range(width)]
+        curr = grid[row]
 
-    right_splits = _count_splits(
-        right,
-        lambda grid, row, col: _split_right(grid, row, col),
-    )
-    total += right_splits
+        for col, beams in enumerate(active):
+            if beams == 0:
+                continue
 
-    print(f"right - {right_splits}")
-    for i, r in enumerate(right):
-        print(f"[{i}] {r}")
+            if curr[col] == "^":
+                # Split timelines to immediate left and right; if out of bounds, they exit immediately.
+                if col - 1 >= 0:
+                    next_active[col - 1] += beams
+                else:
+                    exited += beams
 
-    return total
+                if col + 1 < width:
+                    next_active[col + 1] += beams
+                else:
+                    exited += beams
+            else:
+                next_active[col] += beams
+
+        active = next_active
+
+    return exited + sum(active)
 
 
 def main() -> None:
-    # sample_1 = part_1("p1-sample.input")
-    # print(f"Part 1 - Sample: {sample_1}")
-    # puzzle_1 = part_1("p1-puzzle.input")
-    # print(f"Part 1 - Puzzle: {puzzle_1}")
+    sample_1 = part_1("p1-sample.input")
+    print(f"Part 1 - Sample: {sample_1}")
+    puzzle_1 = part_1("p1-puzzle.input")
+    print(f"Part 1 - Puzzle: {puzzle_1}")
 
     sample_2 = part_2("p1-sample.input")
     print(f"Part 2 - Sample: {sample_2}")
-    # puzzle_2 = part_2("p1-puzzle.input")
-    # print(f"Part 2 - Puzzle: {puzzle_2}")
+    puzzle_2 = part_2("p1-puzzle.input")
+    print(f"Part 2 - Puzzle: {puzzle_2}")
 
 
 if __name__ == "__main__":
