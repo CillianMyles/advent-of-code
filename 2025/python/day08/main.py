@@ -18,6 +18,8 @@ def _read_lines(filename: str) -> Iterator[str]:
 
 def part_1(filename: str) -> int:
     print("=" * 50)
+    print("Coordinates")
+    print("=" * 50)
     coordinates: List[Coordinate] = []
     for line in _read_lines(filename):
         coords = line.split(",")
@@ -33,6 +35,8 @@ def part_1(filename: str) -> int:
         print(f"[{i}] {coordinate!r}")
 
     print("=" * 50)
+    print("Distances")
+    print("=" * 50)
     distances: List[Tuple[float, int, int]] = []
     for i, i_coords in enumerate(coordinates):
         for j, j_coords in enumerate(coordinates):
@@ -44,9 +48,11 @@ def part_1(filename: str) -> int:
                 (i_coords.distance_to(j_coords), i, j),
             )
     distances.sort()
-    for distance in distances:
-        print(distance)
+    for i, distance in enumerate(distances):
+        print(f"[{i}] {distance}")
 
+    print("=" * 50)
+    print("Connections")
     print("=" * 50)
     connections: List[List[int]] = []
     for _, i, j in distances:
@@ -59,8 +65,8 @@ def part_1(filename: str) -> int:
             elif j in line:
                 connections[k].append(i)
                 break
-    for connection in connections:
-        print(connection)
+    for i, connection in enumerate(connections):
+        print(f"[{i}] {connection}")
 
     return 0
 
